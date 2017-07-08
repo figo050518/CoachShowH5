@@ -2,13 +2,13 @@
   <div class="page-tabbar">
 
     <div class="page-wrap">
-      <mt-tab-container class="page-tabbar-container" v-model="selected" style="">
+      <mt-tab-container class="page-tabbar-container" v-model="selected" style="margin-bottom:0.4rem">
         <mt-tab-container-item id="0">
           <mt-loadmore :bottom-method="loadBottom" :bottom-status-change="handleBottomChange"
                        :bottom-all-loaded="allLoaded"
                        ref="loadmore" style="background:#f7f8fd">
           <CoachShow class="coachShow"></CoachShow>
-          <div style="white-space: nowrap;;background: #fff;height:0.56rem;width:100%;padding:0.6rem  0.6rem 0.44rem 0.6rem;margin-bottom:0.2rem;overflow-x:scroll">
+          <div style="white-space: nowrap;;background: #fff;width:100%;padding:0.6rem  0.6rem 0.44rem 0.6rem;margin-bottom:0.2rem;overflow-x:scroll">
             <span class="tag-name" v-for='t in tag'
                   v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}</span>
           </div>
@@ -165,6 +165,7 @@ export default {
   height: 100%;
 }
 .action{
+  color:#7ac9f7;
   border-bottom:0.08rem solid #7ac9f7;
 }
 .tag-name{

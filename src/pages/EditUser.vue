@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import Vue from 'Vue'
 import address from '../libs/address.json'
 import TimeBtn from '@/components/TimerBtn'
 
@@ -207,7 +206,7 @@ export default {
       }, 2000)
     },
 
-    // 发送短信 
+    // 发送短信
     sendCode() {
       if(this.telephoneNo == '') {
         this.showMsgBox('手机号码不能为空')

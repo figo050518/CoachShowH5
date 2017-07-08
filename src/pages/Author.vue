@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import Vue from 'Vue'
 import common from '../utils/common'
 
 // /https://segmentfault.com/a/1190000009493199

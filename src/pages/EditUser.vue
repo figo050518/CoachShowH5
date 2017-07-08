@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import Vue from 'Vue'
+import Vue from 'vue'
 import address from '../libs/address.json'
 import TimeBtn from '@/components/TimerBtn'
 import $http from '../utils/api.js'
@@ -218,7 +218,7 @@ export default {
       }, 2000)
     },
 
-    // 发送短信 
+    // 发送短信
     sendCode() {
       if(this.telephoneNo == '') {
         this.showMsgBox('手机号码不能为空')
@@ -483,6 +483,7 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden
 }
+<<<<<<< HEAD
 .f12{
   font-size:12px;
 }
@@ -500,3 +501,6 @@ export default {
   font-size: 16px;
 }
 </style>
+=======
+</style>
+>>>>>>> f939634d89cc91b89a4ff34e4e81c1267a17964b

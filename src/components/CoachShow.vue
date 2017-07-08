@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#7aa5f7">
+  <div style="background:url('../assets/bgHome.png');background-size: 100% 100%">
     <!--     <div>
           <img class="avatar" src="../assets/head.jpg">
           <div class="userName">
@@ -11,7 +11,7 @@
     <div class="showSwiper">
       <swiper v-if="swiperSlides[0]" :options="swiperOption">
         <swiper-slide v-for="slide in swiperSlides" :key="slide.id">
-          <router-link :to="{ name: 'Detail', params: slide }"><img :data-src="slide.imageUrl" class="swiper-lazy">
+          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img :data-src="slide.imageUrl" class="swiper-lazy">
           </router-link>
         </swiper-slide>
       </swiper>

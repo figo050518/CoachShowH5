@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import Vue from 'Vue'
+import Vue from 'vue'
 import address from '../libs/address.json'
 import TimeBtn from '@/components/TimerBtn'
 

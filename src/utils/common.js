@@ -34,6 +34,12 @@ let common = {
               document.body.removeChild(dom);
           },time) 
       }
+    },
+    isNotEmptyObj:(obj)=>{
+       for(let key in obj){
+           return true;
+       }
+       return true;
     }
 }
 export default common;

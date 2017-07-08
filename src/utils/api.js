@@ -13,7 +13,7 @@ export  default{
         if (r.data && r.data.businessCode == 100) {
           r.data.returnData = JSON.parse(r.data.returnData);
           return resolve({result: true, data: r.data.returnData})
-        } else { 
+        } else {
           return resolve({result: false, msg: r.data.returnMsg,code:r.data.businessCode})
         }
       })

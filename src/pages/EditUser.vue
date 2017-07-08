@@ -483,7 +483,6 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden
 }
-<<<<<<< HEAD
 .f12{
   font-size:12px;
 }
@@ -501,6 +500,3 @@ export default {
   font-size: 16px;
 }
 </style>
-=======
-</style>
->>>>>>> f939634d89cc91b89a4ff34e4e81c1267a17964b

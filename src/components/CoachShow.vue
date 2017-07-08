@@ -1,43 +1,39 @@
 <template>
-  <div style="margin-top: 20px;">
-<!--     <div>
-      <img class="avatar" src="../assets/head.jpg">
-      <div class="userName">
-        <span>心随</span>
-        <span>秀值76</span>
-      </div>
-    </div> -->
+  <div style="background:#7aa5f7">
+    <!--     <div>
+          <img class="avatar" src="../assets/head.jpg">
+          <div class="userName">
+            <span>心随</span>
+            <span>秀值76</span>
+          </div>
+        </div> -->
 
     <div class="showSwiper">
       <swiper v-if="swiperSlides[0]" :options="swiperOption">
         <swiper-slide v-for="slide in swiperSlides" :key="slide.id">
-          <router-link :to="{ name: 'Detail', params: slide }"><img :data-src="slide.posterUrl" class="swiper-lazy"></router-link>
+          <router-link :to="{ name: 'Detail', params: slide }"><img :data-src="slide.imageUrl" class="swiper-lazy">
+          </router-link>
         </swiper-slide>
       </swiper>
-    </div>
-
-    <div class="addNewGroup">
-      <router-link to="/new">
-        <mt-button size="large" style="background-color:#0099FF; color:#fff;">制作我的秀卡</mt-button>
-      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-
+import http from '../utils/api.js'
 export default {
   name: 'CoachShow',
 
-  props: {
-    initData: {
-      required: true,
-      type: Array
-    }
-  },
+ // props: {
+   // initData: {
+     // required: true,
+      //type: Array
+    //}
+  //},
 
   data () {
     return {
+      coachDataList:this,
       swiperOption: {
         autoplay : 5000,
         autoplayDisableOnInteraction: false,
@@ -52,7 +48,7 @@ export default {
         lazyLoadingInPrevNextAmount: 3,
         coverflow: {
             rotate: 0,      // rotate：slide做3d旋转时Y轴的旋转角度。默认50。
-            stretch: 150,   // stretch：每个slide之间的拉伸值，越大slide靠得越紧。 默认0。
+            stretch: 50,   // stretch：每个slide之间的拉伸值，越大slide靠得越紧。 默认0。
             depth: 300,     // depth：slide的位置深度。值越大z轴距离越远，看起来越小。 默认100。
             modifier: 1,    //slideShadows：开启slide阴影。默认 true。
             slideShadows : true
@@ -62,17 +58,23 @@ export default {
     }
   },
 
-  watch: {
-    initData(newData) {
-      console.log(newData)
-      this.swiperSlides.push(...this.initData)
-    }
-  },
+  //watch: {
+    //initData(d) {
+      //this.swiperSlides.push(...this.initData.list)
+    //}
+  //},
 
   mounted() {
-    this.swiperSlides.push(...this.initData)
-    console.log(this.initData)
-  }
+    this.getBanner();
+  },
+  methods:{
+   async getBanner(pageIndex) {
+     if(!pageIndex)
+        pageIndex=1
+       var r = await http.post("userInfo/coachShow" ,{pageIndex:pageIndex,pageSize:10});
+       this.swiperSlides.push(...r.data.list)
+    }
+   }
 
 }
 </script>
@@ -93,16 +95,16 @@ export default {
 
 .showSwiper {
   width: 100%;
-  padding-top: 5px;
-  padding-bottom: 30px;
+  padding-bottom: 0.32rem;
+  height:10rem;
+  padding-top:0.32rem;
 }
 
 .swiper-slide {
   text-align: center;
-  font-size: 18px;
   background: #444!important;
-  width: 240px;
-  height: 360px;
+  width: 6.24rem;
+  height: 9.9rem;
 }
 
 .swiper-slide img {
@@ -123,4 +125,7 @@ export default {
   width:60%;
   margin: auto;
 }
+
+
+
 </style>

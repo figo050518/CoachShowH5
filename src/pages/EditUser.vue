@@ -1,30 +1,34 @@
 <template>
-  <div class="page-field" style="background-color: #F5F5F5;">
+  <div class="page-wrap">
 
-    <mt-header title="身份信息" style="height: 50px;">
+    <mt-header class="header" title="身份信息">
       <router-link :to="{name: 'Home', params: {tab:2}}" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-      <mt-button slot="right"  @click.native="submitEidtInfo">保存</mt-button>
+      <mt-button slot="right" class="f12"  @click.native="submitEidtInfo">保存</mt-button>
     </mt-header>
 
-    <div class="avaterbox">
-      <div class="l">头像</div>
-      <div class="r"> <img :src="userInfo.headimgurl" alt="" class="avater"> </div>
-    </div>
+    
 
-    <ul class="modlist hasarrow">
+    <ul class="modlist">
+      <div class="avaterbox">
+        <div class="l">头像</div>
+        <div class="r"> <img :src="userInfo.headimgurl" class="avater"> </div>
+      </div>
       <li>名字： <input class="editInput" type="text" placeholder="请输入用户名"  v-model="userName"></input></li>
-      <li>手机号： <mt-button class="editButton" @click.native="telephoneVisible = true">{{ telephoneTips }}</mt-button></li>
-      <li>性别：<mt-button class="editButton" @click.native="sexPickerVisible = true">{{ sex }}</mt-button></li>
-      <li>教龄： <input class="editInput" type="text" :value="userInfo.year" placeholder="几年教龄"></input></li>
+      <li class="hasarrow">性别：<mt-button class="editButton" @click.native="sexPickerVisible = true">{{ sex }}</mt-button></li>
+      <li>教龄： <input class="editInput" type="text" v-model="userInfo.year" placeholder="几年教龄"></input></li>
     </ul>
 
-    <ul class="modlist hasarrow">
-      <li>地区： <mt-button class="editButton" @click.native="addressPickerVisible = true">{{ addressProvince }} {{addressCity}} {{addressXian}}</mt-button></li>
-      <li>驾校： <input class="editInput" type="text" :value="driverSchool" placeholder="驾校"></input></li>
-      <li>训练场名称： <input class="editInput" type="text" :value="trainingGround" placeholder="训练场名称"></input></li>
-      <li>训练场地址： <input class="editInput" type="text" :value="trainingAddress" placeholder="训练场地址"></input></li>
+    <ul class="modlist">
+      <li class="hasarrow">地区： <mt-button class="editButton" @click.native="addressPickerVisible = true">{{ addressProvince }} {{addressCity}} {{addressXian}}</mt-button></li>
+      <li>驾校： <input class="editInput" type="text" v-model="driverSchool" placeholder="驾校"></input></li>
+      <li>训练场名称： <input class="editInput" type="text" v-model="trainingGround" placeholder="训练场名称"></input></li>
+      <li>训练场地址： <input class="editInput" type="text" v-model="trainingAddress" placeholder="训练场地址"></input></li>
+    </ul>
+
+    <ul class="modlist">
+      <li class="hasarrow">手机号： <mt-button class="editButton" @click.native="telephoneVisible = true">{{ telephoneTips }}</mt-button></li>
     </ul>
 
     <!-- 手机号验证 -->
@@ -53,9 +57,9 @@
       :closeOnClickModal="false"
       popup-transition="popup-fade"
       position="bottom" style="width:100%;">
-      <div class="page-field" style="text-align:center; margin-top:10px;">
-          <mt-button size="small" ref='bindPhoneBtn' @click.native="addressPickerVisible = false" style="background-color:#26A2FF;color:#fff;margin-right:50px;padding:0 30px;">取消</mt-button>
-          <mt-button size="small" ref='bindPhoneBtn' @click.native="addressEdit"style="background-color:#26A2FF;color:#fff;padding:0 30px;">确定</mt-button>
+      <div style="text-align:center; margin-top:10px;">
+          <mt-button size="small" ref='bindPhoneBtn' @click.native="addressPickerVisible = false" style="background-color:#38b1e0;color:#fff;margin-right:50px;padding:0 30px;">取消</mt-button>
+          <mt-button size="small" ref='bindPhoneBtn' @click.native="addressEdit" style="background-color:#38b1e0;color:#fff;padding:0 30px;">确定</mt-button>
       </div>
       <mt-picker :slots="provinceSlots" class="picker" style="width:60%; display:inline-block;" @change="onProvinceChange" :visible-item-count="5" ></mt-picker >
       <mt-picker :slots="citySlots" ref="picker" class="picker" style="width:30%; display:inline-block;" @change="onCityChange" :visible-item-count="5" ></mt-picker >
@@ -81,6 +85,7 @@
 import Vue from 'Vue'
 import address from '../libs/address.json'
 import TimeBtn from '@/components/TimerBtn'
+import $http from '../utils/api.js'
 
 export default {
   name: 'EditUser',
@@ -108,6 +113,7 @@ export default {
       telephoneInputDisabled: true,
       checkCode:'',
       bindPhoneBtnStatus: true,
+      codeSended:false,
       sex: '',
       sexSlots: [
         {
@@ -169,6 +175,11 @@ export default {
         this.provinceSlots[0].defaultIndex = 0;
       }, 1000);
     });
+    // todo 获取用户信息
+    this.post('uc/getUserInfo',{},(res)=>{
+      console.log(res);
+      
+    })
   },
 
   methods: {
@@ -217,13 +228,13 @@ export default {
         this.$refs.timeBtn.setDisabled(true)   //设置按钮不可用
         this.$refs.timeBtn.start()
         this.telephoneInputDisabled = false   // 设置验证码输入框可用
-        // hz.ajaxRequest("sys/sendCode?_"+$.now(),function(data){
-        //   if(data.status){
-        //       vm.$refs.timeBtn.start(); //启动倒计时
-        //   }else{
-        //       vm.$refs.timeBtn.stop(); //停止倒计时
-        //   }
-        // });
+        this.post('userInfo/sendMsg',{mobile:this.telephoneNo},(res)=>{
+            if(res.result){
+                this.codeSended = true;
+            }else{
+                this.showMsgBox('验证码发送失败')
+            }
+        });
       }
     },
 
@@ -231,14 +242,43 @@ export default {
     bindPhone() {
       console.log('绑定手机: ',this.telephoneNo, this.checkCode)
       // 发送给后台
-      this.$store.dispatch('setTelephoneNo', this.telephoneNo)
-      this.telephoneVisible = false;
-      this.telephoneTips = this.telephoneNo
+      // this.$store.dispatch('setTelephoneNo', this.telephoneNo)
+      this.post('userInfo/checkMobileCode',{mobile:this.telephoneNo,code:this.checkCode},checkRes=>{
+         if(checkRes.result){
+             //todo 绑定手机
+             this.telephoneVisible = false;
+             this.telephoneTips = this.telephoneNo;
+         }else{
+           this.showMsgBox('请输入正确的验证码')
+         }
+      })
+      
     },
 
     // 保存编辑的信息
     submitEidtInfo() {
-       console.log(this.userInfo.openid, this.userName, this.sex, this.addressProvince, this.addressCity, this.addressXian, this. driverSchool,this.trainingGround,this.trainingAddress)
+      //  console.log(this.userInfo.openid, this.userName, this.sex, this.addressProvince, this.addressCity, this.addressXian, this. driverSchool,this.trainingGround,this.trainingAddress)
+       this.post('uc/updataUser',{
+         name:this.userName,
+         mobile:this.telephoneNo,
+         sex:this.sex,
+         workYear:this.userInfo.year,
+         province:this.addressProvince,
+         city:this.addressCity,
+         area:this.addressXian,
+         schoolName:this.driverSchool,
+         trainingGround:this.trainingGround,
+         trainingLocation:this.trainingAddress,
+       },(res)=>{
+         console.log('1');
+         console.log(res);
+       }) ;
+       
+   },
+
+    async post(url,params,cb){
+      let res = await $http.post(url,params);
+      cb(res);
     }
 
   },
@@ -286,12 +326,14 @@ export default {
   padding: 10px;
 }
 .avaterbox {
-  height: 60px;
-  line-height: 60px;
+  height: 50px;
+  line-height: 50px;
   background-color: #fff;
-  padding-top: 10px;
-  margin-bottom: 10px;
-  width: 100%;
+  /*padding-top: 10px;*/
+  margin-top: 10px;
+  width: calc (100% - 15px);
+  border-bottom: 1px solid #ddd;
+  margin-left:15px;
 }
 .acaterbox:after {
   clear:both;
@@ -304,36 +346,37 @@ export default {
 .avaterbox .l {
   width: 50%;
   float: left;
-  margin-left: 15px;
+  line-height: 50px;
 }
 .avaterbox .r {
   float: right;
-  border-radius: 50px;
+  border-radius:40px;
   margin-right: 15px;
   overflow: hidden;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
 }
 .avaterbox .avater {
-  width: 100%;
-  height: 100%
+  width:40px;
+  height: 40px;
 }
 
 .editInput {
   float: right;
   box-shadow: none;
   height: inherit;
-  margin-right: 20px;
+  margin-right: 10px;
   text-align: right;
   font-size: inherit;
-  line-height: 1.6;
+  line-height: 40px;
   border-radius: 0;
   border: 0;
   flex: 1;
   outline: 0;
 }
 .editInput:focus {
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
 }
 
 .editButton {
@@ -342,9 +385,10 @@ export default {
   box-shadow: none;
   height: inherit;
   margin-right: 10px;
+  padding-right:0;
   text-align: right;
   font-size: inherit;
-  line-height: 1.6;
+  line-height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -359,16 +403,23 @@ export default {
 
 .modlist {
   margin-bottom: 10px;
-  border-top: 1px solid #d1d1d1;
-  border-bottom: 1px solid #d1d1d1;
+  /*border-top: 1px solid #d1d1d1;*/
+  /*border-bottom: 1px solid #d1d1d1;*/
   background-color: #fff
 }
 
 .modlist li {
   margin-left: 14px;
   line-height: 1.5;
-  padding: 12px 20px 12px 0;
+  padding-right:20px;
+  line-height: 40px;
+  border-bottom: 1px solid #ddd;
+  /*padding: 12px 20px 12px 0;*/
   /*border-bottom: 1px solid #e5e5e5;*/
+}
+
+.modlist li:last-child{
+  border-bottom: none;
 }
 
 .modlist li .icon {
@@ -389,7 +440,7 @@ export default {
   color: #999
 }
 
-.hasarrow li {
+.hasarrow{
   background: url(http://s8.mogucdn.com/pic/140730/176rwo_ieygimrsmy4tezbvmiytambqgqyde_16x29.png) no-repeat 95% center;
   background-size: 8px
 }
@@ -431,5 +482,21 @@ export default {
   padding: 3px 5px 2px 5px;
   text-overflow: ellipsis;
   overflow: hidden
+}
+.f12{
+  font-size:12px;
+}
+.page-wrap{
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#f7f8fd;
+}
+.header{
+  height: 40px;
+  background: #799ff8;
+  font-size: 16px;
 }
 </style>

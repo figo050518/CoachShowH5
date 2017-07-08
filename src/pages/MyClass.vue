@@ -51,9 +51,9 @@ export default {
     
   },
   methods:{
-    async post(url,params){
+    async post(url,params,cb){
       let res = await $http.post(url,params);
-      return res;
+      cb(res);
     },
     back(){
         console.log('back');

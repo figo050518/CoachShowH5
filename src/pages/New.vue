@@ -25,27 +25,29 @@ export default {
    Done
   },
   mounted(){
-    let result =  this.post('apply/goApply')
-    switch(result.code){
-      case '124':
-        this.isDone=true;
-        this.hasSubmited = true;
+    this.post('apply/goApply',{},result=>{
+      switch(result.code){
+        case '124':
+          this.isDone=true;
+          this.hasSubmited = true;
         break;
-      case '128':
-        this.isDone = true;
+        case '128':
+          this.isDone = true;
         break;
-      case '123':
-        this.isNew = true;
+        case '123':
+          this.isNew = true;
         break;  
-      default:
-        this.isNew =true;
+        default:
+          this.isNew =true;
         break;  
-    };
+      };
+    })
+    
   },
   methods:{
-    async post(url,params){
+    async post(url,params,cb){
       let res = await $http.post(url,params,{});
-      return res;
+      cb(res);
     },
     submited(){
       this.isNew=false;

@@ -74,31 +74,36 @@ export default {
               this.timeCount = this.timeCount - 1;
             } 
         },1000);
-        let res = this.post('userInfo/sendMsg',{mobile:this.phone});
-        if(res){
-          common.alert('验证码发送成功，请查看短信确认',1000);
-        };
+        this.post('userInfo/sendMsg',{mobile:this.phone},(res)=>{
+            if(res.result){
+              common.alert('验证码发送成功，请查看短信确认',1000);
+            };
+        });
+        
       };
     },
     submit(){
       let err = this.checkForm();
       console.log(err);
       if(!err){
-          let checkRes = this.post('userInfo/checkMobileCode',{mobile:this.phone,code:this.msgCode});
-          if(checkRes){
-            let submitRes = this.post('apply/save',{
+        this.post('userInfo/checkMobileCode',{mobile:this.phone,code:this.msgCode},(checkRes)=>{
+          if(checkRes.result){
+            this.post('apply/save',{
               name:this.name,
               mobile:this.phone,
               school:this.school,
               trainingGround:this.court,
+            },(submitRes)=>{
+              if(submitRes.result){
+                console.log(true);
+                this.$emit('submited');
+              }
             });
-            if(submitRes){
-              console.log(true);
-              this.$emit('submited');
-            }
           }else{
             common.alert('网络异常',1000);
           };
+        });
+          
       }else{
         common.alert(err,1000)
       };    
@@ -116,13 +121,9 @@ export default {
         }
       }
     },
-    async post(url,params){
+    async post(url,params,cb){
       let res = await $http.post(url,params);
-      if(res){
-         return res.result;
-      }else{
-         return false;
-      }
+      cb(res);
     },
   }
 };

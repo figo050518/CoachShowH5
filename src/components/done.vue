@@ -47,9 +47,26 @@ export default {
    top:50%;
    margin-top: -5px;
 }
+.tip{
+  position: relative;
+  padding-top: 8rem;
+}
+.tip:before{
+  content:'';
+  width:4rem;
+  height:4rem;
+  background:url('../assets/WorkDone@3x.png') no-repeat center;
+  background-size: 100%;
+  position: absolute;
+  z-index: 1;
+  top:3rem;
+  left:50%;
+  margin-left: -2rem;
+}
 .tip p {
   text-align: center;
-  margin-top: 20px;
+  margin-top: .2rem;
+  color:#666;
 }
 .btn{
     width: 80%;

@@ -6,23 +6,18 @@
         <mt-tab-container-item id="0">
           <CoachShow class="coachShow" :initData="coachDataList"></CoachShow>
         </mt-tab-container-item>
-
-        <!--    <mt-tab-container-item id="1">
-                  <RankingList :initData="coachDataList"></RankingList>
-                </mt-tab-container-item>
-         -->
         <mt-tab-container-item id="2">
           <Profile></Profile>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <div style="background: #f7f8fd;height:0.56rem;width:100%;padding:0.6rem  0.6rem 0.44rem 0.6rem;">
+    <!--<div style="background: #f7f8fd;height:0.56rem;width:100%;padding:0.6rem  0.6rem 0.44rem 0.6rem;">
       <span style="font-size:0.56rem; margin-left:0.8rem;color:#7ac97">大叔</span>
       <span style="font-size:0.56rem; margin-left:0.8rem;color:#7ac97">大叔</span>
     </div>
     <div style="width=100%;background: #f7f8fd;height:100">
 
-    </div>
+    </div>-->
     <mt-tabbar v-model="selected" fixed>
       <mt-tab-item id="0">
         <icon slot="icon" name="ViewGallery" scale="20"></icon>

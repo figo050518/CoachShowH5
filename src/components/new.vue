@@ -1,10 +1,10 @@
 <template>
   <div class="page-field">
-    <div class="header">
+    <div class="header" @click="back">
       制作我的秀卡
     </div>
     <div class="banner">
-      <img src="../assets/400x240.png">
+      <img src="../assets/showBg.png">
     </div>
     <div class="form-wrap">
       <div>
@@ -59,7 +59,11 @@ export default {
     }
   },
   methods:{
-     sendMsg(){ 
+    back(){
+      // console.log(this.$route);
+      this.$router.go(-1)
+    },
+    sendMsg(){ 
       if(this.phone && this.phoneREG.test(this.phone)){
         this.sendFlag = true;
         let count =  setInterval(()=>{

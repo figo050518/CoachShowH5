@@ -1,37 +1,4 @@
 <template>
-  <!--<div class="page-field">
-    <div class="header">
-      制作我的秀卡
-    </div>
-    <div class="banner">
-      <img src="../assets/400x240.png">
-    </div>
-    <div class="form-wrap">
-      <div>
-          <label for="name">姓名</label>
-          <input type="text" name="name" v-model="name">
-      </div>
-      <div class="phone">
-          <label for="phone">电话</label>
-          <input type="text" name="phone" v-model="phone">
-          <span  v-show='!sendFlag'  class="msg-btn" @click="sendMsg">获取验证码</span>
-          <span v-show='sendFlag' class="msg-btn-grey">剩余{{timeCount}}s</span>
-      </div>
-      <div>
-          <label for="msgCode">验证码</label>
-          <input type="text" name="msgCode" v-model="msgCode">
-      </div>
-      <div>
-          <label for="school">驾校</label>
-          <input type="text" name="school" v-model="school">
-      </div>
-      <div>
-          <label for="court">训练场</label> 
-          <input type="text" name="court" v-model="court">
-      </div>
-      <div class="submit" @click="submit">提交</div>
-    </div>
-  </div>-->
   <div>
     <New v-if='isNew' v-on:submited='submited'></New>
     <Done v-if='isDone' :hasSubmited = 'hasSubmited' ></Done>
@@ -58,24 +25,26 @@ export default {
    Done
   },
   mounted(){
-    let res =  this.post('apply/goApply',{})
-    if(res.result==true){
-      switch(res.data){
-         case 1:
-         ;
-         case 2:
-         this.isDone = true;
-         case 3:
-         this.isNew = true;
-         break;
-      };
-    }else{
-      this.isNew=true;
-    }
+    let result =  this.post('apply/goApply')
+    switch(result.code){
+      case '124':
+        this.isDone=true;
+        this.hasSubmited = true;
+        break;
+      case '128':
+        this.isDone = true;
+        break;
+      case '123':
+        this.isNew = true;
+        break;  
+      default:
+        this.isNew =true;
+        break;  
+    };
   },
   methods:{
     async post(url,params){
-      let res = await $http.post(url,params);
+      let res = await $http.post(url,params,{});
       return res;
     },
     submited(){

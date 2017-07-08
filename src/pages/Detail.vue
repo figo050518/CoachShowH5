@@ -12,10 +12,10 @@
     <div class="coachBaseInfo" v-if="!loading">
       <div class="coachPoster"><img style="width: 6rem" :src="coachData.logoUrl"></div>
       <div class="coachInfo">
-        <div class="coachName">{{coachData.name}} <span><img style="width: 0.5rem;display: inline-block;" src="../assets/gold.png"/></span><span class="coachIsMember">认证会员</span></div>
+        <div class="coachName">{{coachData.name}} <img class="cron-img"style="margin-left: 0.2rem;" src="../assets/gold.png"/><span class="coachIsMember">认证会员</span></div>
         <div class="coachYear" style="font-size:0.48rem">{{coachData.workYear}}年教龄</div>
-        <div class="coachDriverSchool" style="font-size:0.48rem"><icon class="icon" slot="icon" name="shop" scale="20"></icon>{{coachData.schoolName}}</div>
-        <div class="coachAddress" style="font-size:0.48rem"><icon class="icon" slot="icon" name="map" scale="20"></icon>{{coachData.area}}</div>
+        <div class="coachDriverSchool" style="font-size:0.48rem"><img src="../assets/school.png" class="cron-img" />{{coachData.schoolName}}</div>
+        <div class="coachAddress" style="font-size:0.48rem"><img src="../assets/Location.png" class="cron-img" name="map"/>{{coachData.area}}</div>
       </div>
     </div>
     <!-- 学员印象 -->
@@ -83,6 +83,11 @@
 .wrap {
   background-color: #F5F5F5;
 }
+.cron-img{
+  width: 0.5rem; display: inline-block;
+  vertical-align: sub;
+  margin-right: 0.3rem;
+}
 .header{
   line-height: 40px;
   background: #799ff8;
@@ -106,7 +111,8 @@
   margin-top: -5px;
 }
 .coachBaseInfo {
-  background-color: #fff;
+  background: url("../assets/bgDetail.png");
+  background-size: 100% 100%;
   padding: 1rem 0.8rem;
   border-bottom: 2px solid #F2F2F2;
   height:6rem
@@ -140,24 +146,26 @@
   padding-right: 5px;
 }
 .coachBaseInfo .coachInfo .coachName {
+  color:#fff;
   margin: 10px auto 10px;
   font-size: 0.72rem;
   font-weight: 700;
 }
 .coachBaseInfo .coachInfo .coachName .coachIsMember{
-  margin: 10px auto 10px;
-  padding-left: 5px;
+
   font-size: 0.48rem;
   font-weight: 600;
   color: #ffd200;
 }
 .coachBaseInfo .coachInfo .coachYear{
-
+  color: #fff;
 }
 .coachBaseInfo .coachInfo .coachDriverSchool {
+  color:#fff;
   margin-top: 18px;
 }
 .coachBaseInfo .coachInfo .coachAddress {
+  color:#fff;
   margin-top: 5px;
 }
 .coachTags {

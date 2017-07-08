@@ -7,6 +7,9 @@
           <mt-loadmore :bottom-method="loadBottom" :bottom-status-change="handleBottomChange"
                        :bottom-all-loaded="allLoaded"
                        ref="loadmore" style="background:#f7f8fd;">
+            <div class="header">
+              教练助手
+            </div>
             <CoachShow class="coachShow"></CoachShow>
             <div style="white-space: nowrap;background: #fff;width:100%;padding:0.6rem  0.6rem 0.44rem 0.6rem;margin-bottom:0.2rem;overflow-x:scroll">
             <span class="tag-name" v-for='t in tag'
@@ -101,7 +104,7 @@
         this.tag[i].select = false;
       }
     obj.select=true
-    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10});
+    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10,id:obj.id});
     this.coachDataList = r.data.list;
   },
   async getTag() {
@@ -144,6 +147,14 @@
 </script>
 
 <style scoped>
+  .header{
+    line-height: 40px;
+    background: #799ff8;
+    font-size: 16px;
+    color:#fff;
+    text-align: center;
+    position:relative;
+  }
   .page-detail{
     padding:0 0.9rem
   }

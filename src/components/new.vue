@@ -60,7 +60,6 @@ export default {
   },
   methods:{
     back(){
-      // console.log(this.$route);
       this.$router.go(-1)
     },
     sendMsg(){ 

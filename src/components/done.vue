@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="header" v-if='hasSubmited'>
+    <div class="header" v-if='hasSubmited' @click="back">
       制作我的秀卡
     </div>
-    <div class="header" v-else>
+    <div class="header" v-else @click="back">
       使用
     </div>
 
@@ -20,7 +20,12 @@
 </template>
 <script>
 export default {
-  props:['hasSubmited']
+  props:['hasSubmited'],
+  methods:{
+    back(){
+      this.$router.go(-1)
+    },
+  }
 }
 </script>
 

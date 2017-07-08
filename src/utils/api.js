@@ -14,7 +14,7 @@ export  default{
           r.data.returnData = JSON.parse(r.data.returnData);
           return resolve({result: true, data: r.data.returnData})
         } else {
-          return reject({result: false, msg: r.data.returnMsg})
+          return resolve({result: false, msg: r.data.returnMsg,code:businessCode})
         }
       })
     })

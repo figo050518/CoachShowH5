@@ -20,7 +20,7 @@
                 <router-link :to="{name: 'Detail', params: {id:item.id}}" slot="left">
                   <div style="width:6.4rem; height:6.4rem;" v-bind:style="{'background':'url('+item.logoUrl+')','background-size':'100% 100%'}">
                   </div>
-                  <p style="color:666;background: #fff;padding:0.4rem;height:0.78rem; ">
+                  <p style="color:#666;background: #fff;padding:0.4rem;height:0.78rem; ">
                     <span style="float:left;margin-right:0.2rem;font-size:0.44rem">{{item.name}}</span>
                     <span style="float:left;font-size:0.46rem;color:#7ac9f7">{{item.score}}分</span>
                     <!--<span style="float:right;font-size:0.44rem;color:#999">{{item.thumbsCount}}</span>-->
@@ -152,6 +152,11 @@
 </script>
 
 <style scoped>
+  .selectOnline{
+    width: 0.4rem;
+    height: 0.04rem;
+    background: #0cadff;
+  }
   .push-img{
     width: 0.6rem;
     position: absolute !important;
@@ -178,14 +183,14 @@
     position:relative;
   }
   .page-detail{
-    padding:0 0.9rem
+    padding: 0 0.6rem;
   }
   .thumbnail{
     display: inline-block;
     width: 6.4rem;
     border: 0;
     padding: 0;
-    margin: 0 0.1rem 0.4rem 0.1rem;
+    margin: 0  0.25rem 0.4rem 0.25rem;
   }
   .page-tabbar {
     overflow: hidden;

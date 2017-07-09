@@ -34,7 +34,7 @@
     </div>
 
     <div class="coachDescription" v-if="!loading">
-      <div class="coachDesTitle">热门活动</div>
+      <div class="coachDesTitle">推荐班型</div>
       <div class="commonContent">
           <div style="border-bottom: 1px solid #e0e2eb;">
             <div style="margin:  0.4rem 6rem 0.4rem 0.4rem ;display: inline-block">
@@ -62,18 +62,18 @@
       <div class="coachDesTitle">教学环境
         <a>
         <img src="../assets/right.png" style="width:0.3rem ;float: right;margin-top: 0.17rem;">
-        <span style="font-size: 0.48rem;float: right;color: #666;margin-right: 0.1rem;">19张照片</span>
+        <span style="font-size: 0.48rem;float: right;color: #666;margin-right: 0.1rem;">更多</span>
       </a>
       </div>
       <div class="coachDesContent">
-        <div class="env">
+        <div class="env" style="background: url('http://ose1l6bts.bkt.clouddn.com/%E8%AE%AD%E7%BB%83%E5%9C%BA3.jpg');background-size: 100% 100%">
         </div>
-        <div class="env" ></div>
-        <div class="env" >
+        <div class="env" style="background: url('http://ose1l6bts.bkt.clouddn.com/%E8%AE%AD%E7%BB%83%E5%9C%BA1.jpg');background-size: 100% 100%"></div>
+        <div class="env" style="background: url('http://ose1l6bts.bkt.clouddn.com/%E8%AE%AD%E7%BB%83%E5%9C%BA2.jpg');background-size: 100% 100%">
         </div>
       </div>
     </div>
-    <div style=" ;text-align: center;margin-bottom: 2rem;color: #b3b3b3">没有更多类容了</div>
+    <div style=" ;text-align: center;height:1.2rem;margin-top: 0.4rem;margin-bottom: 2rem;color: #b3b3b3">没有更多类容了</div>
     <router-link to="/new">
     <div class="addNewGroup" v-if="!loading">
    我是教练, 我也要申请个人主页
@@ -165,9 +165,8 @@
     text-overflow: ellipsis;
   }
   .env{
-    width: 4.3rem;
+    width: 4.38rem;
     height: 5rem;
-    border: 1px solid #3d3d3d;
     display: inline-block;
     margin: 0 0.13rem;
   }
@@ -178,14 +177,13 @@
   padding-top: 0.1rem;
   color: #fff;
   border-radius: 15px;
-  vertical-align: super;
-  margin-left: auto;
-  margin-right: 0px;
   width: 2rem;
   height: 0.92rem;
   background: rgb(12, 173, 255);
   display: inline-block;
   text-align: center;
+  position: absolute;
+  margin-top: 0.8rem;
 }
 .cron-img{
   width: 0.5rem; display: inline-block;

@@ -23,7 +23,7 @@ export default new Router({
     {path: '/new', name: 'New', component: New },
     {path: '/detail', name: 'Detail', component: Detail },
     {path: '/editUser', name: 'EditUser', component: EditUser },
-    {path: '/regMember', name: 'RegMember', component: RegMember},
+    {path: '/regMember/:isMember/:imgUrl', name: 'RegMember', component: RegMember},
     {path:'/myClass',name:'MyClass',component:MyClass},
     {path:'/editClass/:id',name:'EditClass',component:EditClass},
     {path:'/addClass',name:'AddClass',component:EditClass},

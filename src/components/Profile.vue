@@ -24,7 +24,7 @@
 
         <!--用户信息-->
         <ul class="modlist hasarrow">
-          <router-link to="/regMember"><li><i class="icon vip"></i>我的会员</li></router-link>
+          <li @click="goVip"><i class="icon vip"></i>我的会员</li>
           <router-link to=""><li><i class="icon post" ></i>我的秀卡</li></router-link>
         </ul>
 
@@ -59,10 +59,11 @@ export default {
 
   mounted() {
     this.post('uc/getUserInfo',{},res=>{
-
+      console.log(res);
       if(res.result){
         this.$set(this.userInfo,'headimgurl',res.data.imgUrl||this.$store.getters.getUserInfo.headimgurl);
         this.$set(this.userInfo,'nickname',res.data.name);
+        this.$set(this.userInfo,'isMember',res.data.isMember);
       };  
     }) 
   },
@@ -74,6 +75,15 @@ export default {
       let res = await $http.post(url,params);
       cb(res);
     },
+    goVip(){
+      this.$router.push({
+         name:'RegMember',
+         params:{
+           isMember:this.userInfo.isMember,
+           imgUrl:this.userInfo.headimgurl
+         }
+      })
+    }
   }
 }
 </script>
@@ -184,7 +194,7 @@ export default {
   margin-left: 14px;
   line-height: 1.5;
   padding: 12px 12px 12px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ddd;
 }
 
 .modlist li .icon {

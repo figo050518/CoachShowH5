@@ -104,7 +104,8 @@
         this.tag[i].select = false;
       }
     obj.select=true
-    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10,id:obj.id});
+    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10,tagId:obj.id});
+    console.log(r.data.length)
     this.coachDataList = r.data.list;
   },
   async getTag() {

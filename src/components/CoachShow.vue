@@ -1,5 +1,5 @@
 <template>
-  <div style="background: url('/yjdata/www/www/CoachShowH5/src/assets/bgHome.png');background-size: 100% 100%">
+  <div style="background: url('http://ose1l6bts.bkt.clouddn.com/bg2@2x.png');background-size: 100% 100%">
     <!--     <div>
           <img class="avatar" src="../assets/head.jpg">
           <div class="userName">
@@ -99,7 +99,6 @@ export default {
 .showSwiper {
   width: 100%;
   padding-bottom: 0.32rem;
-  height:10rem;
   padding-top:0.32rem;
 }
 
@@ -107,7 +106,7 @@ export default {
   text-align: center;
   background: #444!important;
   width: 6.24rem;
-  height: 9.9rem;
+  height: 8.8rem;
 }
 
 .swiper-slide img {

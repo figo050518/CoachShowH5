@@ -14,7 +14,9 @@
                   v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}
               <div v-show="t.select" class="selectOnline"></div>
             </div>
+              <div class="pulldiv">
               <img v-show="tagShow" src="../assets/pull.png" class="pull-img" v-on:click="changTagShow()"/>
+              </div>
               <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
             </div>
             <div class="page-detail" style="margin-bottom: 2.1rem" >
@@ -154,6 +156,14 @@
 </script>
 
 <style scoped>
+  .pulldiv{
+    position: absolute;
+    right: 0rem;
+    background: rgb(255, 255, 255);
+    top: 0.7rem;
+    width: 1.5rem;
+    height: 1rem;
+  }
   .selectOnline{
     width: 0.8rem;
     height: 0.04rem;
@@ -169,9 +179,7 @@
   }
   .pull-img{
     width: 0.6rem;
-    position: absolute;
-    top: 0.7rem;
-    right: 0.3rem;
+    margin-left: 0.6rem;
   }
   .hidden{
     white-space: nowrap;

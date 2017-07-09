@@ -10,8 +10,10 @@
             <CoachShow class="coachShow"></CoachShow>
             <div style=";background: #fff;padding:0.6rem  0.9rem 0.44rem 0.6rem;margin-bottom:0.2rem;position: sticky"
                  v-bind:class="{hidden:tagShow}">
-            <span class="tag-name" v-for='t in tag'
-                  v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}</span>
+            <div class="tag-name" v-for='t in tag'
+                  v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}
+              <div v-show="t.select" class="selectOnline"></div>
+            </div>
               <img v-show="tagShow" src="../assets/pull.png" class="pull-img" v-on:click="changTagShow()"/>
               <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
             </div>
@@ -153,9 +155,11 @@
 
 <style scoped>
   .selectOnline{
-    width: 0.4rem;
+    width: 0.8rem;
     height: 0.04rem;
-    background: #0cadff;
+    background-size: 100% 100%;
+    border-bottom:0.08rem solid #7ac9f7;
+    margin: 0 auto;
   }
   .push-img{
     width: 0.6rem;
@@ -204,10 +208,9 @@
   }
   .action{
     color: #7ac9f7;
-    border-bottom:0.08rem solid #7ac9f7;
   }
   .tag-name{
-    font-size:0.56rem; margin-right:0.8rem;color:#7ac97;
+    font-size:0.56rem; margin-right:0.8rem;display: inline-block;
   }
 
 

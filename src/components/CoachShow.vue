@@ -1,5 +1,5 @@
 <template>
-  <div style="background:url('../assets/bgHome.png');background-size: 100% 100%">
+  <div style="background: url('/yjdata/www/www/CoachShowH5/src/assets/bgHome.png');background-size: 100% 100%">
     <!--     <div>
           <img class="avatar" src="../assets/head.jpg">
           <div class="userName">
@@ -52,6 +52,9 @@ export default {
             depth: 300,     // depth：slide的位置深度。值越大z轴距离越远，看起来越小。 默认100。
             modifier: 1,    //slideShadows：开启slide阴影。默认 true。
             slideShadows : true
+        },
+        onSlideChangeEnd: swiper => {
+        console.log('onSlideChangeEnd', '111111')
         }
       },
       swiperSlides: []

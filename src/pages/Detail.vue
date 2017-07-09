@@ -135,12 +135,12 @@
         this.star.push(1);
       }
       if(!this.isInteger(r.data.score-score)){
-        this.star.push(3);
+        this.star.push(2);
       }
       var disable = 5-Math.ceil(r.data.score);
       if(disable){
         for(var i=0;i<disable;i++){
-          this.star.push(2);
+          this.star.push(3);
         }
       }
       console.log(this.star)

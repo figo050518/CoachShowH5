@@ -90,6 +90,7 @@
 
   data () {
     return {
+      memberId:0,
       star:[],
       loading: true,
       coachData: {},
@@ -113,17 +114,23 @@
       return obj%1 === 0
     },
     async getAction(){
-      var r = await http.post("userInfo/myClass",{userId:this.$route.params.id});
+      var r = await http.post("userInfo/myClass",{userId:this.memberId });
       console.log("aaaaa")
       console.log(r);
     },
     async getEnv(){
-      var r = await http.post("userInfo/myPhoto",{userId:this.$route.params.id});
+      var r = await http.post("userInfo/myPhoto",{userId:this.memberId });
     console.log("eeeee")
       console.log(r);
     },
     async fetchData() {
-      var r = await http.post("userInfo/coachIndex" ,{id:this.$route.params.id});
+    if(this.$route.params.id){
+      sessionStorage.setItem("memberId",this.$route.params.id)
+    }
+    if(sessionStorage.getItem("memberId")){
+      this.memberId = parseInt(sessionStorage.getItem("memberId"));
+    }
+      var r = await http.post("userInfo/coachIndex" ,{id:this.memberId });
       console.log(r)
     if(r.data.score<0){
       this.star = [2,2,2,2,2]

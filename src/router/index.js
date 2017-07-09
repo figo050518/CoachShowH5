@@ -25,6 +25,7 @@ export default new Router({
     {path: '/editUser', name: 'EditUser', component: EditUser },
     {path: '/regMember', name: 'RegMember', component: RegMember},
     {path:'/myClass',name:'MyClass',component:MyClass},
-    {path:'/editClass/',name:'EditClass',component:EditClass},
+    {path:'/editClass/:id',name:'EditClass',component:EditClass},
+    {path:'/addClass',name:'AddClass',component:EditClass},
   ]
 })

@@ -11,20 +11,23 @@
     
 
     <ul class="modlist">
-      <div class="avaterbox">
-        <div class="l">头像</div>
-        <div class="r"> <img :src="userInfo.headimgurl" class="avater"> </div>
-      </div>
-      <li>名字： <input class="editInput" type="text" placeholder="请输入用户名"  v-model="userName"></input></li>
+      <li class="hasarrow" @click="uploadAvater">
+        <div class="avaterbox">
+          <input type="file" hidden>
+          <div class="l">头像</div>
+          <div class="r"><img :src="userInfo.headimgurl" class="avater"></div>
+        </div>
+      </li>
+      <li>名字： <input class="editInput" type="text" :placeholder="userName==''?'请输入用户名':''"  v-model="userName"></input></li>
       <li class="hasarrow">性别：<mt-button class="editButton" @click.native="sexPickerVisible = true">{{ sex }}</mt-button></li>
-      <li>教龄： <input class="editInput" type="text" v-model="userInfo.year" placeholder="几年教龄"></input></li>
+      <li>教龄： <input class="editInput" type="text" v-model="userInfo.year" :placeholder="userInfo.year==''?'几年教龄':''"></input></li>
     </ul>
 
     <ul class="modlist">
       <li class="hasarrow">地区： <mt-button class="editButton" @click.native="addressPickerVisible = true">{{ addressProvince }} {{addressCity}} {{addressXian}}</mt-button></li>
-      <li>驾校： <input class="editInput" type="text" v-model="driverSchool" placeholder="驾校"></input></li>
-      <li>训练场名称： <input class="editInput" type="text" v-model="trainingGround" placeholder="训练场名称"></input></li>
-      <li>训练场地址： <input class="editInput" type="text" v-model="trainingAddress" placeholder="训练场地址"></input></li>
+      <li>驾校： <input class="editInput" type="text" v-model="driverSchool" :placeholder="driverSchool==''?'驾校':''"></input></li>
+      <li>训练场名称： <input class="editInput" type="text" v-model="trainingGround" :placeholder="trainingGround==''?'训练场名称':''"></input></li>
+      <li>训练场地址： <input class="editInput" type="text" v-model="trainingAddress" :placeholder="trainingAddress==''?'训练场地址':''"></input></li>
     </ul>
 
     <ul class="modlist">
@@ -58,8 +61,8 @@
       popup-transition="popup-fade"
       position="bottom" style="width:100%;">
       <div style="text-align:center; margin-top:10px;">
-          <mt-button size="small" ref='bindPhoneBtn' @click.native="addressPickerVisible = false" style="background-color:#38b1e0;color:#fff;margin-right:50px;padding:0 30px;">取消</mt-button>
-          <mt-button size="small" ref='bindPhoneBtn' @click.native="addressEdit" style="background-color:#38b1e0;color:#fff;padding:0 30px;">确定</mt-button>
+          <mt-button size="small"  @click.native="addressPickerVisible = false" style="background-color:#38b1e0;color:#fff;margin-right:50px;padding:0 30px;">取消</mt-button>
+          <mt-button size="small"  @click.native="addressEdit" style="background-color:#38b1e0;color:#fff;padding:0 30px;">确定</mt-button>
       </div>
       <mt-picker :slots="provinceSlots" class="picker" style="width:60%; display:inline-block;" @change="onProvinceChange" :visible-item-count="5" ></mt-picker >
       <mt-picker :slots="citySlots" ref="picker" class="picker" style="width:30%; display:inline-block;" @change="onCityChange" :visible-item-count="5" ></mt-picker >
@@ -95,11 +98,9 @@ export default {
   },
 
   data() {
-    let telephone = this.$store.getters.getTelephoneNo
-    let telephoneTips = telephone == '' ? '请绑定手机号' : telephone
-
     return {
-      userName: '',
+      userId:'',
+      userName: '',  
       driverSchool: '',
       trainingGround:'',
       trainingAddress: '',
@@ -108,8 +109,8 @@ export default {
       telephoneVisible: false,
       msgVisible:false,
       msg: '',
-      telephoneTips: telephoneTips,
-      telephoneNo: telephone,
+      telephoneTips: '',
+      telephoneNo: '',
       telephoneInputDisabled: true,
       checkCode:'',
       bindPhoneBtnStatus: true,
@@ -152,9 +153,9 @@ export default {
           textAlign: 'center'
         }
       ],
-      addressProvince: '上海市',
-      addressCity: '市辖区',
-      addressXian: '长宁区',
+      addressProvince: '',
+      addressCity: '',
+      addressXian: '',
       addressProvinceTemp: '',
       addressCityObj:'',
       addressCityTemp: '',
@@ -165,21 +166,34 @@ export default {
   },
 
   mounted() {
-    this.userInfo = this.$store.getters.getUserInfo
-    if(this.userInfo.openid) {
-      this.userName = this.userInfo.nickname
-      this.sex = this.userInfo.sex == '0' ? '女' : '男'
-    }
+    // todo 获取用户信息
+    this.post('uc/getUserInfo',{},(res)=>{
+      console.log(res);
+      if(res.result){
+        let data = res.data;
+        this.$set(this.userInfo,'headimgurl',data.imageUrl||this.$store.getters.getUserInfo.headimgurl);
+        this.$set(this.userInfo,'sex',data.sex=='0'?'女':'男');
+        this.$set(this.userInfo,'year',data.workYear||'');
+        this.userId = data.id;
+        this.userName = data.name;
+        this.sex = this.userInfo.sex;
+        this.driverSchool = data.schoolName||'';
+        this.trainingGround=data.trainingGround||'';
+        this.trainingAddress =data.trainingLocation||'';
+        this.telephoneNo =data.mobile||'';
+        this.telephoneTips = this.telephoneNo==''?'请绑定手机号' : this.telephoneNo;
+        this.addressProvince = data.province||'上海市';
+        this.addressCity = data.city||'市辖区';
+        this.addressXian = data.area||'长宁区';
+      }
+    });
+
     this.$nextTick(() => {
       setInterval(() => {   // 初始化地区选择插件
         this.provinceSlots[0].defaultIndex = 0;
       }, 1000);
     });
-    // todo 获取用户信息
-    this.post('uc/getUserInfo',{},(res)=>{
-      console.log(res);
-      
-    })
+    
   },
 
   methods: {
@@ -217,7 +231,10 @@ export default {
         this.msg = ''
       }, 2000)
     },
+    //头像上传
+    uploadAvater(){
 
+    },
     // 发送短信
     sendCode() {
       if(this.telephoneNo == '') {
@@ -257,9 +274,10 @@ export default {
 
     // 保存编辑的信息
     submitEidtInfo() {
-      //  console.log(this.userInfo.openid, this.userName, this.sex, this.addressProvince, this.addressCity, this.addressXian, this. driverSchool,this.trainingGround,this.trainingAddress)
-       this.post('uc/updataUser',{
+       this.post('uc/updateUser',{
+         id:this.userId,
          name:this.userName,
+         logoUrl:this.headimgurl,
          mobile:this.telephoneNo,
          sex:this.sex,
          workYear:this.userInfo.year,
@@ -270,8 +288,12 @@ export default {
          trainingGround:this.trainingGround,
          trainingLocation:this.trainingAddress,
        },(res)=>{
-         console.log('1');
-         console.log(res);
+         if(res.result){
+           this.showMsgBox('保存成功');
+         }else{
+           console.log(res);
+           this.showMsgBox('网络异常，请稍后再试')
+         }
        }) ;
        
    },
@@ -284,7 +306,7 @@ export default {
   },
 
   watch: {
-
+    
     'checkCode': {
       handler() {
         if( this.checkCode != '') {
@@ -332,8 +354,8 @@ export default {
   /*padding-top: 10px;*/
   margin-top: 10px;
   width: calc (100% - 15px);
-  border-bottom: 1px solid #ddd;
-  margin-left:15px;
+  /*border-bottom: 1px solid #ddd;*/
+  margin-right:10px;
 }
 .acaterbox:after {
   clear:both;
@@ -351,7 +373,7 @@ export default {
 .avaterbox .r {
   float: right;
   border-radius:40px;
-  margin-right: 15px;
+  /*margin-right: 5px;*/
   overflow: hidden;
   width: 40px;
   height: 40px;

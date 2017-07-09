@@ -6,18 +6,18 @@
     <div class="class-form">
        <div>
          <label>课程名称<i>*</i></label>
-         <input type="text" placeholder="例如普通班，周末班，VIP班" v-model="className">  
+         <input type="text" :placeholder="className==''?'例如普通班，周末班，VIP班':''" v-model="className">  
        </div>
        <div>
            <label>驾照类型<i>*</i></label>
-           <label class="pick" v-for="(item,index) in classType" :key="index" >
-             <input :value="item" type="radio" name="classType" :checked='chosenType==index?true:false'>
+           <label class="pick" v-for="(item,index) in licenseType" :key="index" >
+             <input :value="item" type="radio" name="classType" :checked='licenseIndex==index?true:false' @click="licenseIndex=index">
              {{item}}
            </label>
        </div>
        <div>
            <label>课程费用<i>*</i></label>
-           <input type="text" placeholder="例如4500元" v-model="price">
+           <input type="text" :placeholder="price==''?'例如4500元':''" v-model="price" :value="price">
        </div>
        <div @click="showShuttle=true">
            <label>接送方式</label>
@@ -29,7 +29,11 @@
        </div>
        <div>
            <label>几人一车</label>
-           <input type="text" placeholder="例如4人" v-model="memberNum">
+           <input type="text" :placeholder="memberNum==''?'例如4人':''" v-model="memberNum" :value="memberNum">
+       </div>
+       <div>
+           <label>班型描述</label>
+           <textarea v-model="description" :value='description'></textarea>
        </div>
     </div>
     <div class="save" @click="save">
@@ -62,9 +66,11 @@ export default {
   name: 'editClass',
   data(){
     return {
+    //    isNew:false,
+      isEdit:false, 
       className:'',
-      classType:['c1','c2'],
-      chosenType:0,
+      licenseType:['c1','c2'],
+      licenseIndex:0,
       price:'',
       shuttleType:['教练接送','班车接送','自行前往'],
       shuttleIndex:null,
@@ -73,6 +79,7 @@ export default {
       memberNum:'' ,
       showClass:false,
       showShuttle:false,
+      description:'',
       checkMap:{
           className:'请填写课程名称',
           price:'请填写课程费用'
@@ -82,14 +89,26 @@ export default {
   components: {
   },
   mounted(){
-    //   console.log(this.$route.params);
-      if(common.isNotEmptyObj(this.$route.params)){
+        //   console.log(this.$route.params);
+        if(common.isNotEmptyObj(this.$route.params)){
           // todo 编辑
-          console.log('edit')
-      }else{
-          // 新增
-          console.log('new')
-      }
+          console.log('edit');
+          this.isEdit=true;
+          this.post('uc/viewClass',{id:this.$route.params.id},res=>{
+             if(res.result){
+                 let data=res.data;
+                 this.className = data.name;
+                 this.licenseIndex = this.licenseType.indexOf(data.license);
+                 this.price = data.price;
+                 this.shuttleIndex = this.shuttleType.indexOf(data.traffic);
+                 this.classIndex = this.classTime.indexOf(data.learnTime);
+                 this.memberNum = data.cardLoadPerson+'人';
+                 this.description = data.description;
+             }else{
+                 common.alert(res.msg);
+             }
+          })
+        }
   },
   methods:{
     async post(url,params,cb){
@@ -116,14 +135,44 @@ export default {
                return common.alert(checkMap[key])
            }
         }
-        console.log({
-            className:this.className,
-            classType:this.classType[this.chosenType],
-            price:this.price,
-            shuttleType:this.shuttleType[this.shuttleIndex]||'',
-            classTime:this.classTime[this.classIndex]||'',
-            memberNum:this.memberNum||'',
-        })
+        if(this.isEdit){
+          this.post('uc/updateClass',{
+              id:this.$route.params.id,
+              name:this.className,
+              price:parseInt(this.price,10),
+              learnTime:this.classTime[this.classIndex]||'',
+              traffic:this.shuttleType[this.shuttleIndex]||'c1',
+              license:this.licenseType[this.licenseIndex],
+              cardLoadPerson:parseInt(this.memberNum),
+              description:this.description
+          },res=>{
+              if(res.result){
+                  console.log('保存成功');
+                  this.$router.go(-1);
+              }else{
+                  common.alert(res.msg);
+              }
+          })
+        }else{
+          this.post('uc/addClass',{
+              name:this.className,
+              price:parseInt(this.price,10),
+              learnTime:this.classTime[this.classIndex]||'',
+              traffic:this.shuttleType[this.shuttleIndex]||'',
+              license:this.licenseType[this.licenseIndex],
+              cardLoadPerson:parseInt(this.memberNum),
+              description:this.description
+          },res=>{
+              console.log(res);
+              if(res.result){
+                  console.log('保存成功');
+                  this.$router.go(-1);
+              }else{
+                  common.alert(res.msg);
+              }
+          })
+        }
+
     }
   }
 };
@@ -198,6 +247,15 @@ export default {
     width:15px;
     height: 15px;
     margin-right: 0px;
+}
+.class-form div textarea{
+   width: 68%;
+   border:1px solid #eee;
+   border-radius: 4px;
+   height: 60px;
+   outline: none;
+   vertical-align: text-top;
+   margin-bottom: 10px;
 }
 .save{
     padding:10px;

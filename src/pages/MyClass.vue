@@ -2,18 +2,22 @@
   <div class="page-field">
      <div class="header" @click.self="back">
        班型信息
-       <div class="add" @click.stop="edit">添加</div>
+       <div class="add" @click.stop="edit(null)">添加</div>
     </div>  
     <ul class="class-list">
-        <li v-for="(item,index) in myClass" :key='index'>
+        <li v-for="(item,index) in myClass" :key='item.id'>
             <div class="fl">
-                <p class="class-name">{{item.className}}</p>
-                <p class="class-info">{{item.classInfo}}</p>
+                <p class="class-name">{{item.name}}</p>
+                <p class="class-info">
+                    <span>{{item.traffic}}</span>
+                    <span>{{item.learnTime}}</span>
+                    <span>{{item.cardLoadPerson}}人一车</span>
+                </p>
             </div>
             <div class="fr">
                 <span class="price">¥{{item.price}}</span>
-                <span class="edit" @click="edit(index)"></span>
-                <span class="del" @click="del(index)"></span>
+                <span class="edit" @click="edit(item.id)"></span>
+                <span class="del" @click="del(item.id,index)"></span>
             </div>
         </li>
     </ul>
@@ -40,20 +44,6 @@ export default {
             this.myClass =res.data;
         }
     });
-    // let myClass = [
-    //     {
-    //         className:'普通班',
-    //         classInfo:'周一-周日',
-    //         price:'234'
-    //     },
-    //     {
-    //         className:'普通班',
-    //         classInfo:'周一-周日',
-    //         price:'124'
-    //     }
-    // ];
-    // this.myClass = myClass;
-    
   },
   methods:{
     async post(url,params,cb){
@@ -64,22 +54,25 @@ export default {
         console.log('back');
         this.$router.go(-1);
     },
-    edit(index){
-        if(index){
-           this.$router.push({
+    edit(id){
+        if(id){
+            this.$router.push({
                name :'EditClass',
-               params:this.myClass[index]
-               }
-           )
+               params:{id:id}
+            })
         }else{
            this.$router.push({
-               name :'EditClass',
-               }
-           )
+               name :'AddClass',
+           })
         }
     },
-    del(index){
+    del(id,index){ 
        this.myClass.splice(index,1);
+       this.post('uc/delClass',{id:id},res=>{
+          if(res.result){
+              common.alert('删除成功',1000);
+          }
+       })
     }
   }
 };
@@ -138,6 +131,7 @@ export default {
 }
 .fl{
     float: left;
+     /*max-width: 55%;*/
 }
 .fr{
     float: right;
@@ -149,6 +143,9 @@ export default {
 .class-info{
     color:#666;
     font-size:12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .price{
     line-height:38px;
@@ -172,5 +169,13 @@ export default {
     background-size: 100%;
     vertical-align: text-bottom;
     margin-left: 5px;
+}
+@media screen and (max-width: 320px){
+    .fl{
+        max-width: 58%;
+    }
+    .class-info{
+        font-size: 10px;
+    }
 }
 </style>

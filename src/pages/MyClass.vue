@@ -34,20 +34,25 @@ export default {
   components: {
   },
   mounted(){
-    // let myClass = this.post('uc/myClass',{});
-    let myClass = [
-        {
-            className:'普通班',
-            classInfo:'周一-周日',
-            price:'234'
-        },
-        {
-            className:'普通班',
-            classInfo:'周一-周日',
-            price:'124'
+    this.post('uc/myClass',{},res=>{
+        console.log(res);
+        if(res.result){
+            this.myClass =res.data;
         }
-    ];
-    this.myClass = myClass;
+    });
+    // let myClass = [
+    //     {
+    //         className:'普通班',
+    //         classInfo:'周一-周日',
+    //         price:'234'
+    //     },
+    //     {
+    //         className:'普通班',
+    //         classInfo:'周一-周日',
+    //         price:'124'
+    //     }
+    // ];
+    // this.myClass = myClass;
     
   },
   methods:{

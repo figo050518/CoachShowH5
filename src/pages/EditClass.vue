@@ -82,9 +82,13 @@ export default {
   components: {
   },
   mounted(){
-      console.log(this.$route.params);
+    //   console.log(this.$route.params);
       if(common.isNotEmptyObj(this.$route.params)){
-          // todo
+          // todo 编辑
+          console.log('edit')
+      }else{
+          // 新增
+          console.log('new')
       }
   },
   methods:{

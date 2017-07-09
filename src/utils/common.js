@@ -39,7 +39,7 @@ let common = {
        for(let key in obj){
            return true;
        }
-       return true;
+       return false;
     }
 }
 export default common;

@@ -100,8 +100,8 @@
 
   created() {
     this.fetchData();
-    this.getAction();
-    this.getEnv();
+   // this.getAction();
+   // this.getEnv();
   },
 
   methods: {

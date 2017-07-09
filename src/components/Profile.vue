@@ -1,9 +1,13 @@
 <template>
     <div id="views">
       <div class="wrap">
+        
+        <div class="header" @click="back">
+          我的
+        </div>
 
         <!--用户信息-->
-        <header class="hd">
+        <div class="hd">
           <div class="avaterbox">
               <div class="r">
                 <img :src="userInfo.headimgurl" alt="" class="avater">
@@ -16,24 +20,24 @@
           <div class="editInfo">
             <router-link to="/editUser"><span>编辑</span></router-link>
           </div>
-        </header>
+        </div>
 
         <!--用户信息-->
         <ul class="modlist hasarrow">
-          <router-link to="/regMember"><li><icon class="icon" name="trust" scale="20"></icon>我的会员</li></router-link>
-          <router-link to=""><li><icon class="icon" name="survey" scale="20"></icon>我的秀卡</li></router-link>
+          <router-link to="/regMember"><li><i class="icon vip"></i>我的会员</li></router-link>
+          <router-link to=""><li><i class="icon post" ></i>我的秀卡</li></router-link>
         </ul>
 
         <!-- 招生信息 -->
-        <!--  <ul class="modlist hasarrow">
-          <router-link to=""><li><icon class="icon" name="form" scale="20"></icon>我的班型</li></router-link>
-          <router-link to=""><li><icon class="icon" name="pic" scale="20"></icon>我的相册</li></router-link>
-        </ul> -->
+          <ul class="modlist hasarrow">
+          <router-link to="/myClass"><li><i class="icon class"></i>我的班型</li></router-link>
+          <router-link to=""><li><i class="icon photo"></i>我的相册</li></router-link>
+        </ul> 
 
         <!--辅助信息-->
         <ul class="modlist hasarrow">
-          <router-link to=""><li><icon class="icon" name="help" scale="20"></icon>关于我们</li></router-link>
-          <router-link to=""><li><icon class="icon" name="help" scale="20"></icon>意见反馈</li></router-link>
+          <router-link to=""><li><i class="icon about"></i>关于我们</li></router-link>
+          <router-link to=""><li><i class="icon advice"></i>意见反馈</li></router-link>
         </ul>
 
         <!--退出按钮-->
@@ -43,6 +47,8 @@
 </template>
 
 <script>
+import $http from '../utils/api.js'
+
 export default {
   name: 'Profile',
   data () {
@@ -52,73 +58,125 @@ export default {
   },
 
   mounted() {
-    this.userInfo = this.$store.getters.getUserInfo
+    this.post('uc/getUserInfo',{},res=>{
+
+      if(res.result){
+        this.$set(this.userInfo,'headimgurl',res.data.imgUrl||this.$store.getters.getUserInfo.headimgurl);
+        this.$set(this.userInfo,'nickname',res.data.name);
+      };  
+    }) 
+  },
+  methods:{
+    back(){
+      this.$router.go(-1);
+    },
+    async post(url,params,cb){
+      let res = await $http.post(url,params);
+      cb(res);
+    },
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wrap{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#f7f8fd;
+}
+.header{
+  line-height: 40px;
+  background: #799ff8;
+  font-size: 16px;
+  color:#fff;
+  text-align: center;
+  position:relative;
+}
+.header::before{
+   content:'';
+   display: inline-block;
+   width: 10px;
+   height: 10px;
+   border:1px solid #fff;
+   transform: rotate(-45deg);
+   border-right:none;
+   border-bottom:none;
+   position:absolute;
+   left:10px;
+   top:50%;
+   margin-top: -5px;
+}
 .wrap {
   color: #424242;
 }
 
 .hd {
   box-sizing: border-box;
-  padding: 10px 15px;
-  background-color: #0099FF
+  padding:0 10px;
+  line-height: 60px;
+  height: 60px;
+  background-color: #fff;
+  position: relative;
+  margin-top: 18px;
+  box-shadow: 0 2px 5px #eee;
 }
 
 .avaterbox {
-  display: table-cell;
-  padding: 0 15px
+  position: absolute;
+  /*padding: 0 15px*/
+  top:-10px;
 }
 
 .avaterbox .r {
   margin: 2px auto 0 auto;
-  background-color: #0099FF;
-  -webkit-border-radius: 50px;
-  border-radius: 50px;
+  background-color: #f9f9f9;
+  /*-webkit-border-radius: 50px;*/
+  /*border-radius: 50px; */
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
   overflow: hidden;
-  width: 73px;
-  height: 73px;
+  width: 60px;
+  height: 60px;
 }
 
 .avaterbox .avater {
   width: 100%;
-  height: 100%
+  height: 100%;
 }
 
 .namecard {
-  display: table-cell;
-  vertical-align: middle
+ margin-left: 70px;
+ display: inline-block;
 }
 
 .namecard .tt {
-  font-size: 18px;
-  color: #fff;
+  font-size: 16px;
+  color: #333;
 }
 
-.namecard .regist {font-size: 14px; color: #fff; margin-bottom: 15px; margin-right: 15px; }
-.namecard .login {font-size: 14px; color: #fff; margin-bottom: 15px }
+.namecard .regist {font-size: 14px; color: #333; margin-bottom: 15px; margin-right: 15px; }
+.namecard .login {font-size: 14px; color: #333; margin-bottom: 15px }
 
 .editInfo {
-  display: table-cell;
-  vertical-align: middle;
-  padding-top: 20px;
+  display: inline-block;
+  float: right;
+  margin-right: 10px;
+  
 }
 
 .editInfo span {
-  color: #fff;
+  color: #666;
   padding-left: 30px;
 }
 
 .modlist {
-  margin-bottom: 20px;
-  border-top: 1px solid #d1d1d1;
-  border-bottom: 1px solid #d1d1d1;
+  margin-top: 10px;
+  /*border-top: 1px solid #d1d1d1;*/
+  /*border-bottom: 1px solid #d1d1d1;*/
   background-color: #fff
 }
 
@@ -130,10 +188,11 @@ export default {
 }
 
 .modlist li .icon {
+  display:inline-block;
   height: 20px;
   width: 20px;
-  vertical-align: sub;
-  padding-right: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 
@@ -172,7 +231,6 @@ export default {
 }
 
 .modlist .operate .icon {
-  font-size: 16px;
   height: 20px
 }
 
@@ -207,5 +265,28 @@ export default {
   -webkit-appearance: button;
   *overflow: visible
 }
-
+.vip{
+  background: url(../assets/VIP.png) no-repeat center;
+  background-size: 70%;
+}
+.post{
+  background: url(../assets/post.png) no-repeat center;
+  background-size: 90%;
+}
+.class{
+  background: url(../assets/class.png) no-repeat center;
+  background-size: 80%;
+}
+.photo{
+  background: url(../assets/photo.png) no-repeat center;
+  background-size: 80%;
+}
+.about{
+  background: url(../assets/about.png) no-repeat center;
+  background-size: 80%;
+}
+.advice{
+  background: url(../assets/advice.png) no-repeat center;
+  background-size: 80%;
+}
 </style>

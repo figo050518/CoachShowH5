@@ -7,23 +7,23 @@
           <mt-loadmore :bottom-method="loadBottom" :bottom-status-change="handleBottomChange"
                        :bottom-all-loaded="allLoaded"
                        ref="loadmore" style="background:#f7f8fd;">
-            <div class="header">
-              教练助手
-            </div>
             <CoachShow class="coachShow"></CoachShow>
-            <div style="white-space: nowrap;background: #fff;width:100%;padding:0.6rem  0.6rem 0.44rem 0.6rem;margin-bottom:0.2rem;overflow-x:scroll">
+            <div style=";background: #fff;padding:0.6rem  0.9rem 0.44rem 0.6rem;margin-bottom:0.2rem;position: sticky"
+                 v-bind:class="{hidden:tagShow}">
             <span class="tag-name" v-for='t in tag'
                   v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}</span>
+              <img v-show="tagShow" src="../assets/pull.png" class="pull-img" v-on:click="changTagShow()"/>
+              <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
             </div>
             <div class="page-detail" style="margin-bottom: 2.1rem" >
               <div class="thumbnail" v-for="item in coachDataList" >
-                <router-link :to="{name: 'Detail', params: {id:item.memberId}}" slot="left">
-                  <div style="width:6.4rem; height:6.4rem;" v-bind:style="{'background':'url('+item.imageUrl+')','background-size':'100% 100%'}">
+                <router-link :to="{name: 'Detail', params: {id:item.id}}" slot="left">
+                  <div style="width:6.4rem; height:6.4rem;" v-bind:style="{'background':'url('+item.logoUrl+')','background-size':'100% 100%'}">
                   </div>
-                  <p style="color:666;background: #fff;padding:0.4rem;height:0.78rem; ">
+                  <p style="color:#666;background: #fff;padding:0.4rem;height:0.78rem; ">
                     <span style="float:left;margin-right:0.2rem;font-size:0.44rem">{{item.name}}</span>
                     <span style="float:left;font-size:0.46rem;color:#7ac9f7">{{item.score}}分</span>
-                    <span style="float:right;font-size:0.44rem;color:#999">{{item.thumbsCount}}</span>
+                    <!--<span style="float:right;font-size:0.44rem;color:#999">{{item.thumbsCount}}</span>-->
                   </p>
                   </router-link>
               </div>
@@ -69,8 +69,9 @@
 
     data () {
       return {
+        tagShow:true,
         allLoaded: false,
-        bottomText: '加载更多...',
+      //  bottomText: '加载更多...',
         loadPage:1,
         tag:[],
         tagSelect:[],
@@ -92,19 +93,23 @@
       this.getCoach();
       this.$nextTick(() => {
         if(this.$route.params.tab) {
-        this.selected = this.$route.params.tab + ''
-      }
-    });
+          this.selected = this.$route.params.tab + ''
+        }
+      });
 
     },
     methods: {
+      changTagShow(){
+        this.tagShow =! this.tagShow
+      },
       async selectTag(obj){
     if(this.tag.length)
       for(var i=0;i<this.tag.length;i++){
         this.tag[i].select = false;
       }
     obj.select=true
-    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10,id:obj.id});
+    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10,tagId:obj.id});
+    console.log(r.data.length)
     this.coachDataList = r.data.list;
   },
   async getTag() {
@@ -147,6 +152,28 @@
 </script>
 
 <style scoped>
+  .selectOnline{
+    width: 0.4rem;
+    height: 0.04rem;
+    background: #0cadff;
+  }
+  .push-img{
+    width: 0.6rem;
+    position: absolute !important;
+    right: 0.3rem;
+    bottom: 0.1rem;
+  }
+  .pull-img{
+    width: 0.6rem;
+    position: absolute;
+    top: 0.7rem;
+    right: 0.3rem;
+  }
+  .hidden{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .header{
     line-height: 40px;
     background: #799ff8;
@@ -156,14 +183,14 @@
     position:relative;
   }
   .page-detail{
-    padding:0 0.9rem
+    padding: 0 0.6rem;
   }
   .thumbnail{
     display: inline-block;
     width: 6.4rem;
     border: 0;
     padding: 0;
-    margin: 0 0.1rem 0.4rem 0.1rem;
+    margin: 0  0.25rem 0.4rem 0.25rem;
   }
   .page-tabbar {
     overflow: hidden;

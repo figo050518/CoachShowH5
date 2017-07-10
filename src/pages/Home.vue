@@ -8,11 +8,15 @@
                        :bottom-all-loaded="allLoaded"
                        ref="loadmore" style="background:#f7f8fd;">
             <CoachShow class="coachShow"></CoachShow>
-            <div style=";background: #fff;padding:0.6rem  0.9rem 0.44rem 0.6rem;margin-bottom:0.2rem;position: sticky"
+            <div style=";background: #fff;padding:0.6rem  0.9rem 0.44rem 0.6rem;margin-bottom:0.2rem;position: relative"
                  v-bind:class="{hidden:tagShow}">
-            <span class="tag-name" v-for='t in tag'
-                  v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}</span>
+            <div class="tag-name" v-for='t in tag'
+                  v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}
+              <div v-show="t.select" class="selectOnline"></div>
+            </div>
+              <div class="pulldiv">
               <img v-show="tagShow" src="../assets/pull.png" class="pull-img" v-on:click="changTagShow()"/>
+              </div>
               <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
             </div>
             <div class="page-detail" style="margin-bottom: 2.1rem" >
@@ -89,6 +93,7 @@
     },
 
     mounted() {
+      this.setTitle();
       this.getTag();
       this.getCoach();
       this.$nextTick(() => {
@@ -99,6 +104,9 @@
 
     },
     methods: {
+      setTitle(){
+        document.title = "教练秀场";
+      },
       changTagShow(){
         this.tagShow =! this.tagShow
       },
@@ -152,10 +160,20 @@
 </script>
 
 <style scoped>
+  .pulldiv{
+    position: absolute;
+    right: 0rem;
+    background: rgb(255, 255, 255);
+    top: 0.7rem;
+    width: 1.5rem;
+    height: 1rem;
+  }
   .selectOnline{
-    width: 0.4rem;
+    width: 0.8rem;
     height: 0.04rem;
-    background: #0cadff;
+    background-size: 100% 100%;
+    border-bottom:0.08rem solid #7ac9f7;
+    margin: 0 auto;
   }
   .push-img{
     width: 0.6rem;
@@ -165,9 +183,7 @@
   }
   .pull-img{
     width: 0.6rem;
-    position: absolute;
-    top: 0.7rem;
-    right: 0.3rem;
+    margin-left: 0.6rem;
   }
   .hidden{
     white-space: nowrap;
@@ -204,10 +220,9 @@
   }
   .action{
     color: #7ac9f7;
-    border-bottom:0.08rem solid #7ac9f7;
   }
   .tag-name{
-    font-size:0.56rem; margin-right:0.8rem;color:#7ac97;
+    font-size:0.56rem; margin-right:0.8rem;display: inline-block;
   }
 
 

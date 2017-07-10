@@ -1,8 +1,8 @@
 <template>
   <div class="page-field">
-    <div class="header" @click="back">
-      制作我的秀卡
-    </div>
+    <!--<div class="header" @click="back">-->
+      <!--制作我的秀卡-->
+    <!--</div>-->
     <div class="banner">
       <img src="../assets/showBg.png">
     </div>
@@ -26,7 +26,7 @@
           <input type="text" name="school" v-model="school">
       </div>
       <div>
-          <label for="court">训练场</label> 
+          <label for="court">训练场</label>
           <input type="text" name="court" v-model="court">
       </div>
       <div class="submit" @click="submit">提交</div>
@@ -62,7 +62,7 @@ export default {
     back(){
       this.$router.go(-1)
     },
-    sendMsg(){ 
+    sendMsg(){
       if(this.phone && this.phoneREG.test(this.phone)){
         this.sendFlag = true;
         let count =  setInterval(()=>{
@@ -72,14 +72,14 @@ export default {
               // this.timeCount = 30;
             }else{
               this.timeCount = this.timeCount - 1;
-            } 
+            }
         },1000);
         this.post('userInfo/sendMsg',{mobile:this.phone},(res)=>{
             if(res.result){
               common.alert('验证码发送成功，请查看短信确认',1000);
             };
         });
-        
+
       };
     },
     submit(){
@@ -103,10 +103,10 @@ export default {
             common.alert('网络异常',1000);
           };
         });
-          
+
       }else{
         common.alert(err,1000)
-      };    
+      };
     },
     checkForm(){
       for(var key in this.errMap){

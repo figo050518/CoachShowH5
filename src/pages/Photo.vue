@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <mt-header title="我的相册" style="height: 50px;">
+    <mt-header title="我的相册" style="height: 50px; background:#799ff8;">
       <router-link :to="{name: 'Home', params: {tab:2}}" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>

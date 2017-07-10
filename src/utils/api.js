@@ -1,7 +1,7 @@
 import axios from 'axios'
 var token = sessionStorage.getItem("token");
 var obj = {
-  baseURL: 'http://123.206.232.11:9090/coachFront/api/front/',
+  baseURL: 'http://123.206.232.11:6060/coachFront/api/front/',
   auth: token
 };
 export  default{

@@ -4,17 +4,15 @@ import Vue from 'vue'
 import MintUI from 'mint-ui'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Icon from 'vue-svg-icon/Icon.vue';
-
 import App from './App'
 import router from './router'
 import store from './vuex/store'
 import common from './utils/common'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-axios.defaults.baseURL = 'http://123.206.232.11:8080/coachFront/api/front/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+import LazyLoad from './utils/lazyLoader'
+Vue.use(LazyLoad);
 Vue.use(VueAxios, axios)
-//Vue.property.baseUrl = ""
 
 Vue.use(MintUI)
 Vue.use(VueAwesomeSwiper)

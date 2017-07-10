@@ -22,7 +22,8 @@
             <div class="page-detail" style="margin-bottom: 2.1rem" >
               <div class="thumbnail" v-for="item in coachDataList" >
                 <router-link :to="{name: 'Detail', params: {id:item.id}}" slot="left">
-                  <div style="width:6.4rem; height:6.4rem;" v-bind:style="{'background':'url('+item.logoUrl+')','background-size':'100% 100%'}">
+                  <div class="item" >
+                    <img :src="item.logoUrl" style="width:6.4rem; height:6.4rem;">
                   </div>
                   <p style="color:#666;background: #fff;padding:0.4rem;height:0.78rem; ">
                     <span style="float:left;margin-right:0.2rem;font-size:0.44rem">{{item.name}}</span>
@@ -160,6 +161,11 @@
 </script>
 
 <style scoped>
+  .item{
+    width:6.4rem; height:6.4rem;background:url('http://ose1l6bts.bkt.clouddn.com/1.jpg');
+    background-size: 100% 100%;
+
+  }
   .pulldiv{
     position: absolute;
     right: 0rem;

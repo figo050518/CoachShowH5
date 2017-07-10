@@ -11,7 +11,7 @@
     <div class="showSwiper">
       <swiper v-if="swiperSlides[0]" :options="swiperOption">
         <swiper-slide v-for="slide in swiperSlides" :key="slide.id">
-          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img :data-src="slide.imageUrl" class="swiper-lazy">
+          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img  v-lazyload="slide.zipImageUrl" >
           </router-link>
         </swiper-slide>
       </swiper>
@@ -84,6 +84,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  image[lazy=loading] {
+    background: url('http://ose1l6bts.bkt.clouddn.com/2.jpg ') !important;
+    background-size: 100% 100%;
+  }
 .avatar {
   display: inline-block;
   width: 50px;

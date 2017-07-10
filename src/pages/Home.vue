@@ -93,6 +93,7 @@
     },
 
     mounted() {
+      this.setTitle();
       this.getTag();
       this.getCoach();
       this.$nextTick(() => {
@@ -103,6 +104,9 @@
 
     },
     methods: {
+      setTitle(){
+        document.title = "教练秀场";
+      },
       changTagShow(){
         this.tagShow =! this.tagShow
       },

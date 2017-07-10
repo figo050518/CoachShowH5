@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
-    <div class="header" @click="back">
-      教练主页
-    </div>
+    <!--<div class="header" @click="back">-->
+      <!--教练主页-->
+    <!--</div>-->
 
     <div class="loading" v-if="loading" style="margin: auto; width:50%; text-align:center;">
       <mt-spinner type="snake" style="display:inline-block;"></mt-spinner> 加载中.....
@@ -131,6 +131,7 @@
       this.memberId = parseInt(sessionStorage.getItem("memberId"));
     }
       var r = await http.post("userInfo/coachIndex" ,{id:this.memberId });
+      document.title = r.data.name+"教练的个人主页";
       console.log(r)
     if(r.data.score<0){
       this.star = [2,2,2,2,2]

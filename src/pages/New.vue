@@ -25,6 +25,7 @@ export default {
    Done
   },
   mounted(){
+    this.setTitle();
     this.post('apply/goApply',{},result=>{
       switch(result.code){
         case '124':
@@ -36,15 +37,18 @@ export default {
         break;
         case '123':
           this.isNew = true;
-        break;  
+        break;
         default:
           this.isNew =true;
-        break;  
+        break;
       };
     })
-    
+
   },
   methods:{
+    setTitle(){
+      document.title = '申请个人主页';
+    },
     async post(url,params,cb){
       let res = await $http.post(url,params,{});
       cb(res);

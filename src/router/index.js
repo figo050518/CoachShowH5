@@ -10,6 +10,7 @@ import EditUser from '@/pages/EditUser'
 import RegMember from '@/pages/RegMember'
 import MyClass from   '@/pages/MyClass'
 import EditClass from   '@/pages/EditClass'
+import Photo from '@/pages/Photo'
 
 Vue.use(Router)
 
@@ -27,5 +28,6 @@ export default new Router({
     {path:'/myClass',name:'MyClass',component:MyClass},
     {path:'/editClass/:id',name:'EditClass',component:EditClass},
     {path:'/addClass',name:'AddClass',component:EditClass},
+    {path: '/photo',name: 'Photo',component: Photo}
   ]
 })

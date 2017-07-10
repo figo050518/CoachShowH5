@@ -31,7 +31,7 @@
         <!-- 招生信息 -->
           <ul class="modlist hasarrow">
           <router-link to="/myClass"><li><i class="icon class"></i>我的班型</li></router-link>
-          <router-link to=""><li><i class="icon photo"></i>我的相册</li></router-link>
+          <router-link to="/photo"><li><i class="icon photo"></i>我的相册</li></router-link>
         </ul> 
 
         <!--辅助信息-->

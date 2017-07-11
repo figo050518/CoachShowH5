@@ -1,9 +1,7 @@
 <template>
-  <div class="page-tabbar">
 
     <div class="page-wrap">
-      <mt-tab-container class="page-tabbar-container" v-model="selected">
-        <mt-tab-container-item id="0">
+      <div class="page-tabbar-container">
           <mt-loadmore :bottom-method="loadBottom" :bottom-status-change="handleBottomChange"
                        :bottom-all-loaded="allLoaded"
                        ref="loadmore" style="background:#f7f8fd;">
@@ -34,33 +32,19 @@
               </div>
             </div>
           </mt-loadmore>
-        </mt-tab-container-item>
+        </div>
 
         <!--    <mt-tab-container-item id="1">
                   <RankingList :initData="coachDataList"></RankingList>
                 </mt-tab-container-item>
          -->
-        <mt-tab-container-item id="2">
-          <Profile></Profile>
-        </mt-tab-container-item>
-      </mt-tab-container>
+
+
     </div>
 
-    <mt-tabbar v-model="selected" fixed>
-      <mt-tab-item id="0">
-        <icon slot="icon" name="ViewGallery" scale="20"></icon>
-        {{tabs[0]}}
-      </mt-tab-item>
-      <!--  <mt-tab-item id="1">
-      <img slot="icon" src="../assets/100x100.png">{{tabs[1]}}
-      </mt-tab-item> -->
-      <mt-tab-item id="2">
-        <icon slot="icon" name="account" scale="20"></icon>
-        {{tabs[2]}}
-      </mt-tab-item>
-    </mt-tabbar>
 
-  </div>
+
+
 </template>
 
 <script>
@@ -81,8 +65,6 @@
         tag:[],
         tagSelect:[],
         Authorization:"",
-        selected: '0',
-        tabs: ['教练秀场', '排行榜', '我的'],      // 排行榜不启用
         coachDataList: []
       }
     },
@@ -97,11 +79,6 @@
       this.setTitle();
       this.getTag();
       this.getCoach();
-      this.$nextTick(() => {
-        if(this.$route.params.tab) {
-          this.selected = this.$route.params.tab + ''
-        }
-      });
 
     },
     methods: {
@@ -150,7 +127,7 @@
   handleBottomChange:function(status) {
     this.bottomStatus = status;
     console.log("this.bottomStatus = status; "+ status);
-  },
+  }
   }
 
   }

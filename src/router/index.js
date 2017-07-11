@@ -12,6 +12,8 @@ import MyClass from   '@/pages/MyClass'
 import EditClass from   '@/pages/EditClass'
 import Photo from '@/pages/Photo'
 import regist from "@/pages/regist"
+import Profile from "@/components/Profile"
+import index from "@/pages/index"
 Vue.use(Router)
 
 export default new Router({
@@ -19,8 +21,12 @@ export default new Router({
 
     // 公众号登录授权中转页
     {path: '/author', name: Author, component: Author},
-    {path: '/Home', name: 'Home', component: Home},
-    {path: '/', name: 'regist', component: regist},
+    {path: '/', name: 'index', component: index,
+      children:[
+        {path: '', name: 'Home', component: Home},
+        {path:'/profile',name:"Profile",component:Profile},
+        {path: '/regist', name: 'regist', component: regist},
+      ]},
     {path: '/new', name: 'New', component: New },
     {path: '/detail', name: 'Detail', component: Detail },
     {path: '/editUser', name: 'EditUser', component: EditUser },

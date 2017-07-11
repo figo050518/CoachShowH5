@@ -60,9 +60,7 @@ export default {
   mounted() {
     this.post("userInfo/goUc",{},res=>{
         if(!res.result){
-          this.router.push({
-            name:"regist"
-          })
+      this.$router.push({ path: '/regist' })
         }
     });
     this.post('uc/getUserInfo',{},res=>{

@@ -11,7 +11,7 @@ import RegMember from '@/pages/RegMember'
 import MyClass from   '@/pages/MyClass'
 import EditClass from   '@/pages/EditClass'
 import Photo from '@/pages/Photo'
-
+import regist from "@/pages/regist"
 Vue.use(Router)
 
 export default new Router({
@@ -19,8 +19,8 @@ export default new Router({
 
     // 公众号登录授权中转页
     {path: '/author', name: Author, component: Author},
-
-    {path: '/', name: 'Home', component: Home },
+    {path: '/Home', name: 'Home', component: Home},
+    {path: '/', name: 'regist', component: regist},
     {path: '/new', name: 'New', component: New },
     {path: '/detail', name: 'Detail', component: Detail },
     {path: '/editUser', name: 'EditUser', component: EditUser },

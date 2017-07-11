@@ -1,7 +1,7 @@
 <template>
     <div id="views">
       <div class="wrap">
-        
+
         <div class="header" @click="back">
           我的
         </div>
@@ -32,7 +32,7 @@
           <ul class="modlist hasarrow">
           <router-link to="/myClass"><li><i class="icon class"></i>我的班型</li></router-link>
           <router-link to="/photo"><li><i class="icon photo"></i>我的相册</li></router-link>
-        </ul> 
+        </ul>
 
         <!--辅助信息-->
         <ul class="modlist hasarrow">
@@ -58,14 +58,21 @@ export default {
   },
 
   mounted() {
+    this.post("userInfo/goUc",{},res=>{
+        if(!res.result){
+          this.router.push({
+            name:"regist"
+          })
+        }
+    });
     this.post('uc/getUserInfo',{},res=>{
       console.log(res);
       if(res.result){
         this.$set(this.userInfo,'headimgurl',res.data.imgUrl||this.$store.getters.getUserInfo.headimgurl);
         this.$set(this.userInfo,'nickname',res.data.name);
         this.$set(this.userInfo,'isMember',res.data.isMember);
-      };  
-    }) 
+      };
+    })
   },
   methods:{
     back(){
@@ -175,7 +182,7 @@ export default {
   display: inline-block;
   float: right;
   margin-right: 10px;
-  
+
 }
 
 .editInfo span {

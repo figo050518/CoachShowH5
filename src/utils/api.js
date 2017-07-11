@@ -2,12 +2,11 @@ import axios from 'axios'
 var token = sessionStorage.getItem("token");
 var obj = {
   baseURL: 'http://123.206.232.11:9090/coachFront/api/front/',
-  auth: token
 };
 export  default{
   post: (url, param)=> {
-    if (!token)
-      delete obj.auth
+    if(localStorage.getItem('id'))
+      param.userId=JSON.parse(localStorage.getItem('id'))
     return new Promise((resolve, reject)=> {
       axios.post(url, param, obj).then((r)=> {
         if (r.data && r.data.businessCode == 100) {

@@ -58,11 +58,12 @@ export default {
   },
 
   mounted() {
-    this.post("userInfo/goUc",{},res=>{
-        if(!res.result){
-      this.$router.push({ path: '/regist' })
-        }
-    });
+    //this.post("userInfo/goUc",{},res=>{
+      //  if(!res.result){
+     // this.$router.push({ path: '/regist' })
+       // }
+    //});
+    this.verifyUser();
     this.post('uc/getUserInfo',{},res=>{
       console.log(res);
       if(res.result){
@@ -75,6 +76,11 @@ export default {
   methods:{
     back(){
       this.$router.go(-1);
+    },
+    async verifyUser(){
+      if(!localStorage.getItem('id')){
+        this.$router.push({ path: '/regist' })
+      }
     },
     async post(url,params,cb){
       let res = await $http.post(url,params);

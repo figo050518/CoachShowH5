@@ -95,7 +95,7 @@
         var r =  await http.post('userInfo/login',{mobile:this.phone,code:this.msgCode});
         if(r.result){
           this.$router.push({
-            name :'Home'
+            path:'/profile'
           })
         }else{
           common.alert("服务异常请稍后再试",1000);

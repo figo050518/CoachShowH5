@@ -1,6 +1,8 @@
 <template>
   <div class="page-tabbar">
-    <router-view></router-view>
+    <div style="margin-bottom: 2.1rem">
+      <router-view></router-view>
+    </div>
     <div class="bottom" >
       <router-link to="/">
         <div class="tab" @click="checkCar" v-bind:class="{action:selectCar}">

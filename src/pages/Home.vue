@@ -17,7 +17,7 @@
               </div>
               <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
             </div>
-            <div class="page-detail" style="margin-bottom: 2.1rem" >
+            <div class="page-detail"  >
               <div class="thumbnail" v-for="item in coachDataList" >
                 <router-link :to="{name: 'Detail', params: {id:item.id}}" slot="left">
                   <div class="item" >
@@ -197,7 +197,6 @@
   }
 
   .page-wrap {
-    height:500px;
     overflow: auto;
     height: 100%;
   }

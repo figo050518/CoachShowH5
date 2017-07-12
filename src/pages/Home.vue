@@ -1,10 +1,9 @@
 <template>
 
-    <div class="page-wrap">
+    <div class="page-wrap"  ref="mainContainer">
+      <pullUp v-on:loadpage="loadBottom">
       <div class="page-tabbar-container">
-          <mt-loadmore :bottom-method="loadBottom" :bottom-status-change="handleBottomChange"
-                       :bottom-all-loaded="allLoaded"
-                       ref="loadmore" style="background:#f7f8fd;">
+          <div style="background:#f7f8fd;">
             <CoachShow class="coachShow"></CoachShow>
             <div style=";background: #fff;padding:0.6rem  0.9rem 0.44rem 0.6rem;margin-bottom:0.2rem;position: relative"
                  v-bind:class="{hidden:tagShow}">
@@ -17,7 +16,7 @@
               </div>
               <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
             </div>
-            <div class="page-detail"  >
+            <div class="page-detail" >
               <div class="thumbnail" v-for="item in coachDataList" >
                 <router-link :to="{name: 'Detail', params: {id:item.id}}" slot="left">
                   <div class="item" >
@@ -31,14 +30,14 @@
                   </router-link>
               </div>
             </div>
-          </mt-loadmore>
+          </div>
         </div>
 
         <!--    <mt-tab-container-item id="1">
                   <RankingList :initData="coachDataList"></RankingList>
                 </mt-tab-container-item>
          -->
-
+</pullUp>
 
     </div>
 
@@ -52,10 +51,9 @@
   import RankingList from '@/components/RankingList'
   import Profile from '@/components/Profile'
   import http from '../utils/api.js'
-
+  import pullUp from '@/components/pullUp'
   export default {
     name: 'Home',
-
     data () {
       return {
         tagShow:true,
@@ -68,11 +66,21 @@
         coachDataList: []
       }
     },
-
+    watch: {
+      messages() {
+        console.log("chatlog change");
+        this.$nextTick(() => {
+          let list = this.$els.mainContainer
+          list.scrollTop = list.scrollHeight
+          console.log(list.scrollTop)
+      })
+      }
+    },
     components: {
       CoachShow,
       RankingList,
-      Profile
+      Profile,
+      pullUp
     },
 
     mounted() {
@@ -111,22 +119,11 @@
     this.coachDataList.push(...r.data.list)
     console.log( this.coachDataList);
   },
-  loadBottom() {
+  async loadBottom() {
     this.loadPage = this.loadPage+1
-    setTimeout(async() => {
-      var r = await http.post("userInfo/coachWithTag" ,{pageIndex:this.loadPage ,pageSize:10});
+    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:this.loadPage ,pageSize:10});
     if(r.result)
-      this.coachDataList.push(...r.data.list)
-    this.$refs.loadmore.onBottomLoaded();
-  }, 1500);
-  },
-  handleTopChange:function(status) {
-    this.topStatus = status;
-    console.log("this.topStatus = "+ status);
-  },
-  handleBottomChange:function(status) {
-    this.bottomStatus = status;
-    console.log("this.bottomStatus = status; "+ status);
+      this.coachDataList.push(...r.data.list);
   }
   }
 

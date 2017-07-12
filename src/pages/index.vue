@@ -1,6 +1,6 @@
 <template>
   <div class="page-tabbar">
-    <div style="margin-bottom: 2.1rem">
+    <div style="margin-bottom: 2.3rem">
       <router-view></router-view>
     </div>
     <div class="bottom" >

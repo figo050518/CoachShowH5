@@ -10,11 +10,14 @@
     props: ['loadPage'],
     data(){
       return{
+        timeout:null,
         loading:false
       }
     },
-    mounted(){
-      window.addEventListener('scroll', this.menu);
+    mounted: function () {
+      this.$nextTick(function () {
+        window.addEventListener('scroll', this.menu);
+      })
     },
     methods: {
       getScrollTop(){
@@ -49,13 +52,23 @@
         return windowHeight;
       },
       menu(){
+
         if (this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()) {
-            this.loading = true
-            setTimeout(()=>{
+          //debugger
+          this.loading = true;
+          console.log(window.timeout)
+          clearTimeout(window.timeout);
+          //this.loading = false;
+
+          window.timeout = setTimeout(()=>{
               this.$emit('loadpage');
-               this.loading = false;
-            },1500)
+              this.loading = false;
+            },1500);
+
         }
+      },
+      goPage(){
+        this.$emit('loadpage');
       }
     }
   }

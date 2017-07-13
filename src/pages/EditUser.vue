@@ -8,14 +8,14 @@
       <mt-button slot="right" class="f12"  @click.native="submitEidtInfo">保存</mt-button>
     </mt-header>
 
-    
+
 
     <ul class="modlist">
       <li class="hasarrow" @click="uploadAvater">
         <div class="avaterbox">
-          <input type="file" hidden>
+          <input type="file" class="file" @change="goUpload">
           <div class="l">头像</div>
-          <div class="r"><img :src="userInfo.headimgurl" class="avater"></div>
+          <div class="r"><img :src="logoUrl" class="avater"></div>
         </div>
       </li>
       <li>名字： <input class="editInput" type="text" :placeholder="userName==''?'请输入用户名':''"  v-model="userName"></input></li>
@@ -100,7 +100,8 @@ export default {
   data() {
     return {
       userId:'',
-      userName: '',  
+      userName: '',
+      logoUrl:'',
       driverSchool: '',
       trainingGround:'',
       trainingAddress: '',
@@ -168,7 +169,6 @@ export default {
   mounted() {
     // todo 获取用户信息
     this.post('uc/getUserInfo',{},(res)=>{
-      console.log(res);
       if(res.result){
         let data = res.data;
         this.$set(this.userInfo,'headimgurl',data.imageUrl||this.$store.getters.getUserInfo.headimgurl);
@@ -176,6 +176,7 @@ export default {
         this.$set(this.userInfo,'year',data.workYear||'');
         this.userId = data.id;
         this.userName = data.name;
+        this.logoUrl = data.logoUrl;
         this.sex = this.userInfo.sex;
         this.driverSchool = data.schoolName||'';
         this.trainingGround=data.trainingGround||'';
@@ -193,10 +194,16 @@ export default {
         this.provinceSlots[0].defaultIndex = 0;
       }, 1000);
     });
-    
-  },
 
+  },
   methods: {
+   async goUpload(e){
+      var files = e.target.files || e.dataTransfer.files;
+      var formdata = new FormData();
+      formdata.append('file', files[0]);
+      var r = await $http.upload('uc/uploadLogo',formdata);
+      this.logoUrl = r.data;
+    },
     // 省份变化
     onProvinceChange(picker, values) {
       let add = address
@@ -269,7 +276,7 @@ export default {
            this.showMsgBox('请输入正确的验证码')
          }
       })
-      
+
     },
 
     // 保存编辑的信息
@@ -277,7 +284,8 @@ export default {
        this.post('uc/updateUser',{
          id:this.userId,
          name:this.userName,
-         logoUrl:this.headimgurl,
+         headimgurl:this.headimgurl,
+         logoUrl:this.logoUrl,
          mobile:this.telephoneNo,
          sex:this.sex,
          workYear:this.userInfo.year,
@@ -295,7 +303,7 @@ export default {
            this.showMsgBox('网络异常，请稍后再试')
          }
        }) ;
-       
+
    },
 
     async post(url,params,cb){
@@ -306,7 +314,7 @@ export default {
   },
 
   watch: {
-    
+
     'checkCode': {
       handler() {
         if( this.checkCode != '') {
@@ -330,7 +338,15 @@ export default {
 </script>
 
 <style scoped>
-
+.file{
+  border: 1px solid #0cadff;
+  width: 1.5rem;
+  position: absolute;
+  opacity: 0;
+  right: 1.2rem;
+  height: 1.5rem;
+  margin-top: 0.2rem;
+}
 .mint-popup-2 {
   width: 100%;
   height: 50px;

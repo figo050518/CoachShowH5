@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div style="margin-top: 1.8rem;margin-bottom: 1.7rem">
-      <img src="../assets/logo@2x.png" style="margin: 0 auto;"/>
+    <div style="margin-top: 1.8rem;margin-bottom: 0.7rem;">
+      <img src="../assets/logo@2x.png" style="margin: 0 auto; width: 5rem;"/>
       <div style="text-align: center;font-size: 0.8rem;color:#999;margin-top: 1rem">教练帮</div>
     </div>
     <div style=" margin-left: 1.1rem;
     margin-right: 1.1rem;">
       <input type="text" v-model="phone"
              style="margin:0 auto;display: inline-block;border:0;border-bottom:1px solid #c7c7cd;outline:none;width:11.2rem;padding:0.6rem 0.8rem;font-size: 0.7rem
-              ;color:#adadb3"
-             placeholder="请输入手机号码"
+              ;color:rgb(128, 128, 128);"
+             placeholder="手机号"
       />
       <div style="margin: 0.4rem 0">
         <input type="text"  v-model="msgCode"
                style="margin:0 auto;display: inline-block;border:0;border-bottom:1px solid #c7c7cd;outline:none;width:6.6rem;padding:0.6rem 0.8rem;font-size: 0.7rem
-              ;color:#adadb3"
-               placeholder="请输入校验码"
+              ;color:rgb(128, 128, 128);"
+               placeholder="验证码"
         />
         <div @click="sendMsg" v-show='!sendFlag' style="display: inline-block;
         ;width: 4.4rem;background: #f3f3f3;padding:0.6rem 0;text-align: center;font-size: 0.7rem;color:#808080">获取校验码</div>
@@ -49,11 +49,15 @@
         msgCode :"",
         sendFlag:false,
         timeCount:30,
-        checkRead:false,
+        checkRead:true,
         phoneREG:/^1[3|4|5|8][0-9]\d{4,8}$/
       }
     },
+    mounted(){
+      this.setTitle();
+    },
     methods:{
+      setTitle(){document.title ='登录'},
       async  sendMsg(){
         if(this.phone && this.phoneREG.test(this.phone)){
           this.sendFlag = true;

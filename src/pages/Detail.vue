@@ -3,7 +3,7 @@
     <!--<div class="header" @click="back">-->
       <!--教练主页-->
     <!--</div>-->
-
+    <!--<showImage></showImage>-->
     <div class="loading" v-if="loading" style="margin: auto; width:50%; text-align:center;">
       <mt-spinner type="snake" style="display:inline-block;"></mt-spinner> 加载中.....
     </div>
@@ -29,8 +29,16 @@
     </div>
     <!-- 教练简介 -->
     <div class="coachDescription" v-if="!loading">
-      <div class="coachDesTitle">教练简介</div>
-      <div class="coachDesContent">{{coachData.description}}</div>
+      <div class="coachDesTitle"><div style="display: inline-block">教练简介</div> <div style="display: inline-block;
+    color: rgb(12, 173, 255);
+    font-size: 0.4rem;
+    float: right;" @click="chide" v-show="texthide">更多>></div>
+        <div style="display: inline-block;
+    color: rgb(12, 173, 255);
+    font-size: 0.4rem;
+    float: right;"@click="chide" v-show="!texthide">收起>></div></div>
+      <div class="coachDesContent" v-bind:class="{textHide:texthide}">{{coachData.description}}</div>
+      <div style="background:#ffffff;height: 0.2rem"></div>
     </div>
 
     <div class="coachDescription" v-if="!loading">
@@ -40,25 +48,25 @@
             <div style="margin:  0.4rem 6rem 0.4rem 0.4rem ;display: inline-block">
               <span style="font-size: 0.5rem;
                 color: #212121;margin-right: 0.4rem
-               ">快速版龙泉驾校</span>
+               ">普通班</span>
               <span style="font-size:0.48rem;color:#0cadff;">5500元</span>
               <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,两人一车教练接送</div>
             </div>
-            <div class="but"><a href="tel:188888888" style="color: #fff;">咨询</a></div>
+            <div class="but"><a href="tel:4006787909" style="color: #fff;">咨询</a></div>
           </div>
         <div style="border-bottom: 1px solid #e0e2eb;">
           <div style="margin:  0.4rem 6rem 0.4rem 0.4rem ;display: inline-block">
               <span style="font-size: 0.5rem;
                 color: #212121;margin-right: 0.4rem
-               ">快速版龙泉驾校</span>
-            <span style="font-size:0.48rem;color:#0cadff;">5500元</span>
-            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,两人一车教练接送</div>
+               ">VIP班</span>
+            <span style="font-size:0.48rem;color:#0cadff;">6800元</span>
+            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,一人一车教练接送</div>
           </div>
-          <div class="but"><a href="tel:188888888" style="color: #fff;">咨询</a></div>
+          <div class="but"><a href="tel:4006787909" style="color: #fff;">咨询</a></div>
         </div>
       </div>
     </div>
-    <div class="coachDescription" v-if="!loading">
+    <div  class="coachDescription" v-if="!loading">
       <div class="coachDesTitle">教学环境
         <a>
         <img src="../assets/right.png" style="width:0.3rem ;float: right;margin-top: 0.17rem;">
@@ -73,8 +81,8 @@
         </div>
       </div>
     </div>
-    <div style=" ;text-align: center;height:1.2rem;margin-top: 0.4rem;margin-bottom: 2rem;color: #b3b3b3">没有更多类容了</div>
-    <router-link to="/new">
+    <div v-if="!loading" style=" ;text-align: center;height:1.2rem;margin-top: 0.4rem;margin-bottom: 2rem;color: #b3b3b3">没有更多内容了</div>
+    <router-link v-show="!loading" to="/new">
     <div class="addNewGroup" v-if="!loading">
    我是教练, 我也要申请个人主页
     </div>
@@ -84,12 +92,13 @@
 
 <script>
   import http from '../utils/api.js'
-
+  import showImage from '../components/showImage.vue'
   export default {
   name: 'Detail',
 
   data () {
     return {
+      texthide:true,
       memberId:0,
       star:[],
       loading: true,
@@ -98,7 +107,9 @@
       }
     }
   },
-
+    components:{
+      showImage
+    },
   created() {
     this.fetchData();
    // this.getAction();
@@ -106,6 +117,9 @@
   },
 
   methods: {
+    chide(){
+      this.texthide=!this.texthide
+    },
     back(){
       this.$router.go(-1)
     },
@@ -132,7 +146,7 @@
     }
       var r = await http.post("userInfo/coachIndex" ,{id:this.memberId });
       document.title = r.data.name+"教练的个人主页";
-      console.log(r)
+      console.log(r);
     if(r.data.score<0){
       this.star = [2,2,2,2,2]
     }else if(r.data.score>5){
@@ -347,10 +361,16 @@
 
 }
 .coachDescription .coachDesContent {
-  padding: 10px;
+  padding: 10px 10px 0 10px;
   font-size: 12px;
-  line-height: 20px;
   color: #666;
+}
+.textHide{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 .commonContent{
   font-size: 12px;

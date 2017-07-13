@@ -9,12 +9,11 @@
                  v-bind:class="{hidden:tagShow}">
             <div class="tag-name" v-for='t in tag'
                   v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}
-              <div v-show="t.select" class="selectOnline"></div>
             </div>
               <div class="pulldiv">
               <img v-show="tagShow" src="../assets/pull.png" class="pull-img" v-on:click="changTagShow()"/>
               </div>
-              <img v-show="!tagShow" src="../assets/push.png" class="push-img"  v-on:click="changTagShow()">
+              <div v-show="!tagShow" class="pushdiv"  v-on:click="changTagShow()">收起</div>
             </div>
             <div class="page-detail" >
               <div class="thumbnail" v-for="item in coachDataList" >
@@ -140,13 +139,21 @@
     background-size: 100% 100%;
 
   }
+  .pushdiv{
+    border-top: 0.02rem solid #c7c7cd;
+    text-align: center;
+    padding-top: 0.3rem;
+    font-size: 0.5rem;
+    color: rgb(128, 128, 128);
+    margin-top: 0.4rem;
+  }
   .pulldiv{
     position: absolute;
     right: 0rem;
     background: rgb(255, 255, 255);
     top: 0.7rem;
-    width: 1.5rem;
-    height: 1rem;
+    width: 1.0rem;
+    height: 1.1rem;
   }
   .selectOnline{
     width: 0.8rem;
@@ -163,7 +170,8 @@
   }
   .pull-img{
     width: 0.6rem;
-    margin-left: 0.6rem;
+    margin-left: 0.1rem;
+    margin-top: 0.2rem;
   }
   .hidden{
     white-space: nowrap;
@@ -199,9 +207,18 @@
   }
   .action{
     color: #7ac9f7;
+    border-color:#7ac9f7 !important;
   }
   .tag-name{
-    font-size:0.56rem; margin-right:0.8rem;display: inline-block;
+    font-size: 0.5rem;
+    margin: 0.19rem;
+    display: inline-block;
+    height: 0.8rem;
+    width: 2.9rem;
+    border: 1px solid #999;
+    border-radius: 0.2rem;
+    text-align: center;
+    padding-top: 0.1rem;
   }
 
 

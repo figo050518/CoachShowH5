@@ -11,7 +11,7 @@
     <div class="showSwiper">
       <swiper v-if="swiperSlides[0]" :options="swiperOption">
         <swiper-slide v-for="slide in swiperSlides" :key="slide.id">
-          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img  v-lazyload="slide.zipImageUrl" >
+          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img :data-src="slide.zipImageUrl" >
           </router-link>
         </swiper-slide>
       </swiper>
@@ -52,9 +52,6 @@ export default {
             depth: 300,     // depth：slide的位置深度。值越大z轴距离越远，看起来越小。 默认100。
             modifier: 1,    //slideShadows：开启slide阴影。默认 true。
             slideShadows : true
-        },
-        onSlideChangeEnd: swiper => {
-        console.log('onSlideChangeEnd', '111111')
         }
       },
       swiperSlides: []
@@ -108,8 +105,8 @@ export default {
 
 .swiper-slide {
   text-align: center;
-  background: #444!important;
-  width: 6.24rem;
+  background: url('http://ose1l6bts.bkt.clouddn.com/2.jpg');
+  background-size: 100% 100%;  width: 6.24rem;
   height: 8.8rem;
 }
 
@@ -131,6 +128,7 @@ export default {
   width:60%;
   margin: auto;
 }
+
 
 
 

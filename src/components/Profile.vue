@@ -2,15 +2,11 @@
     <div id="views">
       <div class="wrap">
 
-        <div class="header" @click="back">
-          我的
-        </div>
-
         <!--用户信息-->
         <div class="hd">
           <div class="avaterbox">
               <div class="r">
-                <img :src="userInfo.headimgurl" alt="" class="avater">
+                <img :src="userInfo.logoUrl"  class="avater">
               </div>
           </div>
           <div class="namecard">
@@ -18,26 +14,33 @@
             <!-- <span class="regist">注册</span><span class="login">登录</span> -->
           </div>
           <div class="editInfo">
-            <router-link to="/editUser"><span>编辑</span></router-link>
+            <router-link v-show="loginFlag" to="/editUser"><span>编辑</span></router-link>
+            <router-link v-show="!loginFlag" to="/regist"><span>登录</span></router-link>
           </div>
         </div>
 
         <!--用户信息-->
         <ul class="modlist hasarrow">
-          <li @click="goVip"><i class="icon vip"></i>我的会员</li>
-          <router-link to=""><li><i class="icon post" ></i>我的秀卡</li></router-link>
+          <router-link v-show="!loginFlag" to="/regist">
+            <li><i class="icon vip"></i>我的会员</li>
+          </router-link>
+          <li @click="goVip" v-show="loginFlag"><i class="icon vip"></i>我的会员</li>
+          <router-link v-show="!loginFlag" to="/regist"><li><i class="icon post" ></i>我的秀卡</li></router-link>
+          <router-link v-show="loginFlag" to=""><li><i class="icon post" ></i>我的秀卡</li></router-link>
         </ul>
 
         <!-- 招生信息 -->
-          <ul class="modlist hasarrow">
-          <router-link to="/myClass"><li><i class="icon class"></i>我的班型</li></router-link>
-          <router-link to="/photo"><li><i class="icon photo"></i>我的相册</li></router-link>
+        <ul class="modlist hasarrow">
+          <router-link v-show="!loginFlag" to="/regist"><li><i class="icon class"></i>我的班型</li></router-link>
+          <router-link v-show="loginFlag" to="/myClass"><li><i class="icon class"></i>我的班型</li></router-link>
+          <router-link v-show="!loginFlag" to="/regist"><li><i class="icon photo"></i>我的相册</li></router-link>
+          <router-link v-show="loginFlag" to="/photo"><li><i class="icon photo"></i>我的相册</li></router-link>
         </ul>
 
         <!--辅助信息-->
         <ul class="modlist hasarrow">
           <router-link to=""><li><i class="icon about"></i>关于我们</li></router-link>
-          <router-link to=""><li><i class="icon advice"></i>意见反馈</li></router-link>
+          <!--<router-link to=""><li><i class="icon advice"></i>意见反馈</li></router-link>-->
         </ul>
 
         <!--退出按钮-->
@@ -53,45 +56,50 @@ export default {
   name: 'Profile',
   data () {
     return {
-      userInfo: {}
+      userInfo: {},
+      loginFlag:false
     }
   },
 
   mounted() {
-    //this.post("userInfo/goUc",{},res=>{
-      //  if(!res.result){
-     // this.$router.push({ path: '/regist' })
-       // }
-    //});
-    this.verifyUser();
+    this.post("userInfo/goUc",{},res=>{
+        if(res.result){
+          this.loginFlag = true;
+        }
+    });
+    this.setTitle();
     this.post('uc/getUserInfo',{},res=>{
       console.log(res);
       if(res.result){
-        this.$set(this.userInfo,'headimgurl',res.data.imgUrl||this.$store.getters.getUserInfo.headimgurl);
+        this.$set(this.userInfo,'logoUrl',res.data.logoUrl||this.$store.getters.getUserInfo.headimgurl);
         this.$set(this.userInfo,'nickname',res.data.name);
         this.$set(this.userInfo,'isMember',res.data.isMember);
       };
     })
   },
   methods:{
+    setTitle(){
+      document.title = "教练秀场";
+    },
     back(){
       this.$router.go(-1);
     },
-    async verifyUser(){
-      if(!localStorage.getItem('id')){
-        this.$router.push({ path: '/regist' })
-      }
-    },
+//    async verifyUser(){
+//      if(!localStorage.getItem('id')){
+//        //this.$router.push({ path: '/regist' })
+//        this.loginFlag = true;
+//      }
+//    },
     async post(url,params,cb){
       let res = await $http.post(url,params);
       cb(res);
     },
     goVip(){
       this.$router.push({
-         name:'RegMember',
+        name: 'RegMember',
          params:{
            isMember:this.userInfo.isMember,
-           imgUrl:this.userInfo.headimgurl
+           imgUrl:this.userInfo.logoUrl
          }
       })
     }

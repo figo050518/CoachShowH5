@@ -14,6 +14,7 @@
             <!-- <span class="regist">注册</span><span class="login">登录</span> -->
           </div>
           <div class="editInfo">
+            <span v-show="textFlag">请完善您的信息</span>
             <router-link v-show="loginFlag" to="/editUser"><span>编辑</span></router-link>
             <router-link v-show="!loginFlag" to="/regist"><span>登录</span></router-link>
           </div>
@@ -57,7 +58,8 @@ export default {
   data () {
     return {
       userInfo: {},
-      loginFlag:false
+      loginFlag:false,
+      textFlag:false
     }
   },
 
@@ -75,6 +77,9 @@ export default {
         this.$set(this.userInfo,'nickname',res.data.name);
         this.$set(this.userInfo,'isMember',res.data.isMember);
       };
+      if(this.userInfo.logoUrl == this.$store.getters.getUserInfo.headimgurl){
+        this.textFlag=true
+      }
     })
   },
   methods:{

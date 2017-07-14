@@ -1,15 +1,11 @@
 <template>
   <div class="wrap">
-   <div class="header" @click="back">
-       我的会员
-   </div>
-
     <div class="head">
         <div class="avatar"><img :src="avatar"></div>
     </div>
     <div class="card">
         <div v-if="!isMember">
-            <p>季度会员：¥588／年</p>
+            <p>季度会员：¥559／年</p>
             <p>赶快加入吧，尊享会员特权！</p>
         </div>
         <div v-else>
@@ -21,19 +17,19 @@
         <h3>会员特权</h3>
         <div>
             <p>意向学员信息</p>
-            <p>优先获取招生线索</p> 
+            <p>优先获取招生线索</p>
         </div>
         <div>
             <p>意向学员信息</p>
-            <p>优先获取招生线索</p> 
+            <p>优先获取招生线索</p>
         </div>
         <div>
             <p>意向学员信息</p>
-            <p>优先获取招生线索</p> 
+            <p>优先获取招生线索</p>
         </div>
         <div>
             <p>意向学员信息</p>
-            <p>优先获取招生线索</p> 
+            <p>优先获取招生线索</p>
         </div>
     </div>
 
@@ -48,7 +44,7 @@
             <span @click="showMask=false">取消</span>
             <a href="tel:18651359635"><span>拨打</span></a>
         </div>
-        
+
     </div>
   </div>
 </template>
@@ -65,11 +61,15 @@ export default {
     }
   },
   mounted(){
+    this.setTitle();
       let params = this.$route.params;
     this.isMember = params.isMember=='0'?false:true;
     this.avatar = params.imgUrl;
   },
   methods:{
+    setTitle(){
+      document.title="我的会员"
+    },
       back(){
           this.$router.go(-1);
       }
@@ -133,7 +133,7 @@ export default {
     position: absolute;
     right:calc(50% - 70px);
     top:5px;
-    background-size:100%; 
+    background-size:100%;
 }
 .header{
   line-height: 40px;
@@ -196,7 +196,7 @@ export default {
 }
 .info div{
     margin:10px;
-    padding-left: 30px; 
+    padding-left: 30px;
 }
 .info div:nth-of-type(1){
     background: url('../assets/1@3x.png') no-repeat;
@@ -227,7 +227,7 @@ export default {
     font-size: 12px;
 }
 .sub-btn{
-    color:#fff; 
+    color:#fff;
     width:90%;
     margin: 0 auto;
     line-height: 40px;
@@ -278,6 +278,6 @@ export default {
    }
 .info div p:nth-of-type(2){
     font-size: 10px;
-   } 
+   }
 }
 </style>

@@ -1,15 +1,5 @@
 <template>
   <div class="page-wrap">
-
-    <mt-header class="header" title="身份信息">
-      <router-link :to="{name: 'Home', params: {tab:2}}" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-      <mt-button slot="right" class="f12"  @click.native="submitEidtInfo">保存</mt-button>
-    </mt-header>
-
-
-
     <ul class="modlist">
       <li class="hasarrow" @click="uploadAvater">
         <div class="avaterbox">
@@ -33,7 +23,8 @@
     <ul class="modlist">
       <li class="hasarrow">手机号： <mt-button class="editButton" @click.native="telephoneVisible = true">{{ telephoneTips }}</mt-button></li>
     </ul>
-
+    <div style="margin: 1rem 0.5rem;font-size: 0.7rem;color: #ffffff;background: #5692fd;text-align: center;    border-radius: 0.3rem;
+    padding: 0.3rem;" @click="submitEidtInfo">保存</div>
     <!-- 手机号验证 -->
     <mt-popup
       v-model="telephoneVisible"
@@ -167,6 +158,7 @@ export default {
   },
 
   mounted() {
+    this.setTitle()
     // todo 获取用户信息
     this.post('uc/getUserInfo',{},(res)=>{
       if(res.result){
@@ -197,6 +189,7 @@ export default {
 
   },
   methods: {
+    setTitle(){document.title ='身份信息'},
    async goUpload(e){
       var files = e.target.files || e.dataTransfer.files;
       var formdata = new FormData();
@@ -298,6 +291,12 @@ export default {
        },(res)=>{
          if(res.result){
            this.showMsgBox('保存成功');
+//        setTimeout(function (){
+//          this.$router.push({
+//            path:'/profile'
+//          })
+//        },1500)
+
          }else{
            console.log(res);
            this.showMsgBox('网络异常，请稍后再试')

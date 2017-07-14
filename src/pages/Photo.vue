@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-
+    <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
     <section class="grid">
       <ul class="photo_list">
         <li class="add_btn">
@@ -11,10 +11,10 @@
 
         <li v-for="(img, index) in fromServer" style="position: relative">
           <div class="deletImage" @click="deleteImage(img.id)"></div>
-          <img :src="img.imageUrl"/>
+          <img :src="img.imageUrl" @click="cshow(img.imageUrl)"/>
         </li>
 
-        <li v-for="(img, index) in thumbImg">
+        <li v-for="(img, index) in thumbImg" style="position: relative">
           <div class="deletImage" @click="deleteImage(img.id)"></div>
           <img :src="img.imageUrl"/>
         </li>
@@ -145,11 +145,17 @@
 <script type="text/ecmascript-6">
   import $http from '../utils/api'
   import { Toast } from 'mint-ui';
+  import showImage from '../components/showImage'
   export default {
     name: 'Photo',
+    components:{
+      showImage
+    },
     data () {
       return {
+        show:false,
         title:"",
+        img:'',
         thumbImg: [],//存放blob地址
         resultList: [],//存放base64地址
         fromServer: [],//已经上传过的图片
@@ -162,6 +168,13 @@
       async post(url, params, cb){
         let res = await $http.post(url, params, {});
         cb(res);
+      },
+      changShow:function(){
+        this.show = !this.show;
+      },
+      cshow:function(img){
+        this.show = true;
+        this.img = img
       },
       hideBig: function () {
         this.bigFlag = false;
@@ -208,13 +221,12 @@
         formdata.append('file', files[0]);
         var r = await $http.upload('uc/addPhoto', formdata);
         console.log(r)
-        location.reload();
-
-//        if (!files.length) return;
-//        this.createImage(files);
-////          console.log(files);
+        r.data.imageUrl = r.data.url
+        //location.reload();
+        //this.createImage(r.data);
+//          console.log(files);
 //        for (var i = 0; i < files.length; i++) {
-//          this.thumbImg.push(r);
+          this.fromServer.push(r.data);
 //        }
       },
       createObjUrl: function (file) {//生成对应的blob地址，相比较于fileReader性能兼容性较佳

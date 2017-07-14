@@ -5,7 +5,7 @@
     </div>
     <div class="card">
         <div v-if="!isMember">
-            <p>季度会员：¥559／年</p>
+            <p>季度会员：¥559／季度</p>
             <p>赶快加入吧，尊享会员特权！</p>
         </div>
         <div v-else>

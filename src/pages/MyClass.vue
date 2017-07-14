@@ -3,7 +3,7 @@
      <div class="header" @click.self="back">
        班型信息
        <div class="add" @click.stop="edit(null)">添加</div>
-    </div>  
+    </div>
     <ul class="class-list">
         <li v-for="(item,index) in myClass" :key='item.id'>
             <div class="fl">
@@ -66,7 +66,7 @@ export default {
            })
         }
     },
-    del(id,index){ 
+    del(id,index){
        this.myClass.splice(index,1);
        this.post('uc/delClass',{id:id},res=>{
           if(res.result){
@@ -156,7 +156,7 @@ export default {
     display: inline-block;
     width: 22px;
     height:20px;
-    background: url('../assets/edi.png') no-repeat center;
+    background: url('http://ose1l6bts.bkt.clouddn.com/edit.jpg') no-repeat center;
     background-size: 100%;
     vertical-align: text-bottom;
     margin-left: 5px;
@@ -165,7 +165,7 @@ export default {
     display: inline-block;
     width: 18px;
     height:20px;
-    background: url('../assets/delete.png') no-repeat center;
+    background: url('http://ose1l6bts.bkt.clouddn.com/delete.jpg') no-repeat center;
     background-size: 100%;
     vertical-align: text-bottom;
     margin-left: 5px;

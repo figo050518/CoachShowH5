@@ -11,7 +11,7 @@
     <div class="showSwiper">
       <swiper v-if="swiperSlides[0]" :options="swiperOption">
         <swiper-slide v-for="slide in swiperSlides" :key="slide.id">
-          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img :data-src="slide.zipImageUrl" >
+          <router-link :to="{ name: 'Detail', params: {id: slide.userId} }"><img :src="slide.zipImageUrl" >
           </router-link>
         </swiper-slide>
       </swiper>

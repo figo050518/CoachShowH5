@@ -19,7 +19,7 @@
       <div class="coachPoster"><img style="width: 6rem" :src="coachData.logoUrl"></div>
       <div class="coachInfo">
         <div class="coachName">{{coachData.name}} <img class="cron-img" style="margin-left: 0.2rem;"
-                                                       src="../assets/gold.png"/><span class="coachIsMember">认证会员</span>
+                                                       src="../assets/gold.png"/><span class="coachIsMember">{{coachData.memberName}}</span>
         </div>
         <div class="coachYear" style="font-size:0.48rem">{{coachData.workYear}}年教龄
           <div v-for="s in star" style="display: inline-block;">
@@ -84,7 +84,7 @@
                 color: #212121;margin-right: 0.4rem
                ">普通班</span>
             <span style="font-size:0.48rem;color:#0cadff;">5500元</span>
-            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,两人一车,教练接送</div>
+            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">C1,两人一车,教练接送</div>
           </div>
           <div class="but"><a href="tel:13122046973" style="color: #fff;">咨询</a></div>
         </div>
@@ -94,7 +94,7 @@
                 color: #212121;margin-right: 0.4rem
                ">VIP班</span>
             <span style="font-size:0.48rem;color:#0cadff;">6800元</span>
-            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,一人一车,教练接送</div>
+            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">C1,一人一车,教练接送</div>
           </div>
           <div class="but"><a href="tel:13122046973" style="color: #fff;">咨询</a></div>
         </div>

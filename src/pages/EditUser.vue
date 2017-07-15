@@ -25,7 +25,7 @@
         <li class="hasarrow">手机号： <mt-button class="editButton">{{ telephoneTips }}</mt-button></li>
       </router-link>
     </ul>
-    <div style="margin: 1rem 0.5rem;font-size: 0.7rem;color: #ffffff;background: #5692fd;text-align: center;    border-radius: 0.3rem;
+    <div style="margin: 1rem 0.5rem;font-size: 0.7rem;color: #ffffff;background: #38b1e0;text-align: center;    border-radius: 0.3rem;
     padding: 0.3rem;" @click="submitEidtInfo">保存</div>
     <!-- 手机号验证 -->
     <mt-popup

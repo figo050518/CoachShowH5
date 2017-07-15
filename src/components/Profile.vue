@@ -53,7 +53,7 @@
 <script>
 import $http from '../utils/api.js'
 import common from '../utils/common.js'
-
+import showImage from '../components/showImage.vue'
 export default {
   name: 'Profile',
   data () {
@@ -65,7 +65,9 @@ export default {
       img:''
     }
   },
-
+  components: {
+    showImage
+  },
   mounted() {
     this.post("userInfo/goUc",{},res=>{
         if(res.result){
@@ -117,7 +119,7 @@ export default {
     },
     goVip(){
       this.$router.push({
-        name: 'RegMember',
+        name: 'ShowMember',
          params:{
            isMember:this.userInfo.isMember,
            imgUrl:this.userInfo.logoUrl

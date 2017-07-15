@@ -17,7 +17,7 @@ import index from "@/pages/index"
 import About from "@/pages/about"
 import showMobile from '@/pages/showMobile'
 import changeMobile from '@/pages/changeMobile'
-
+import ShowMember from '@/pages/showMember'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +41,7 @@ export default new Router({
     {path: '/photo',name: 'Photo',component: Photo},
     {path: '/about',name: 'About',component: About},
     {path: '/showMobile/:phone',name:'showMobile',component:showMobile},
-    {path: '/changeMobile/:phone',name:'changeMobile',component:changeMobile}
+    {path: '/changeMobile/:phone',name:'changeMobile',component:changeMobile},
+    {path: '/showMember/:isMember/:imgUrl',name:'ShowMember',component:ShowMember}
   ]
 })

@@ -1,17 +1,35 @@
 <template>
-  <div class="page-field">
-    <div class="form-wrap">
-      <div class="phone">
-        <input type="text" name="phone" v-model="phone" placeholder="新手机号">
+    <!--<div class="form-wrap">-->
+      <!--<div class="phone">-->
+        <!--<input type="text" name="phone" v-model="phone" placeholder="新手机号">-->
+      <!--</div>-->
+      <!--<span  class="msg-btn" v-show='!sendFlag'  @click="sendMsg">获取验证码</span>-->
+      <!--<span v-show='sendFlag' class="msg-btn-grey">剩余{{timeCount}}s</span>-->
+      <!--<div style="    margin-top: 0.5rem;">-->
+        <!--<input type="text" name="msgCode" v-model="msgCode" placeholder="验证码">-->
+      <!--</div>-->
+      <!--<div class="submit" style="font-size: 0.6rem" @click="submit">提交</div>-->
+    <!--</div>-->
+    <div style="margin-left: 1.1rem;margin-top: 2rem;
+    margin-right: 1.1rem;">
+      <input type="text" v-model="phone"
+             style="margin:0 auto;display: inline-block;border:0;border-bottom:1px solid #c7c7cd;outline:none;width:11.2rem;padding:0.6rem 0.8rem;font-size: 0.7rem
+                ;color:rgb(128, 128, 128);"
+             placeholder="新手机号"/>
+      <div style="margin: 0.4rem 0">
+        <input type="text"  v-model="msgCode"
+               style="margin:0 auto;display: inline-block;border:0;border-bottom:1px solid #c7c7cd;outline:none;width:6.6rem;padding:0.6rem 0.8rem;font-size: 0.7rem
+                ;color:rgb(128, 128, 128);"
+               placeholder="验证码"
+        />
+        <div @click="sendMsg" v-show='!sendFlag' style="display: inline-block;
+          ;width: 4.4rem;background: #f3f3f3;padding:0.6rem 0;text-align: center;font-size: 0.7rem;color:#808080">获取校验码</div>
+        <div v-show='sendFlag' style="display: inline-block;
+          ;width: 4.4rem;background: #f3f3f3;padding:0.6rem 0;text-align: center;font-size: 0.7rem;color:#808080">剩余{{timeCount}}</div>
       </div>
-      <span  v-show='!sendFlag'  class="msg-btn" @click="sendMsg">获取验证码</span>
-      <span v-show='sendFlag' class="msg-btn-grey">剩余{{timeCount}}s</span>
-      <div style="    margin-top: 0.5rem;">
-        <input type="text" name="msgCode" v-model="msgCode" placeholder="验证码">
-      </div>
-      <div class="submit" style="font-size: 0.6rem" @click="submit">提交</div>
+      <div style="margin-top: 1.7rem;font-size: 0.7rem;color: #ffffff;background: #38b1e0;text-align: center;    border-radius: 0.2rem;
+    padding: 0.3rem;" @click="submit">保存</div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -119,14 +137,7 @@
 
 <style scoped>
 
-  .page-field{
-    position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:#f7f8fd;
-  }
+
   .banner {
     width: 100%;
     max-height: 200px;

@@ -30,7 +30,7 @@
     margin-top: 0.1rem;">
       <span style="color: #c7c7dc;font-size: 0.6rem;float: left">我已阅读,并同意《用户注册协议》</span>
 
-      <div style="margin-top: 2.5rem;font-size: 0.7rem;color: #ffffff;background: #5692fd;text-align: center;    border-radius: 0.3rem;
+      <div style="margin-top: 2.5rem;font-size: 0.7rem;color: #ffffff;background: #38b1e0;text-align: center;    border-radius: 0.3rem;
     padding: 0.3rem;" @click="submit">保存</div>
     </div>
 

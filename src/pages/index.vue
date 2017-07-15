@@ -6,19 +6,21 @@
     <div class="bottom" >
       <router-link to="/">
         <div class="tab" @click="checkCar" v-bind:class="{action:selectCar}">
-          <img v-show="!selectCar" src="../assets/Car@2x.png" class="log">
-          <img v-show="selectCar" src="../assets/Car.png" class="log">
-          {{tabs[0]}}
+          <img v-show="!selectCar" src="../assets/homeDef.png" class="log" style="display: inline-block">
+          <img v-show="selectCar" src="../assets/homeAct.png" class="log" style="display: inline-block">
+          <div class="str">{{tabs[0]}}</div>
         </div>
       </router-link>
+      <div style="height: 1rem;
+    border: 1px solid #c6cdcc;"></div>
       <!--  <mt-tab-item id="1">
       <img slot="icon" src="../assets/100x100.png">{{tabs[1]}}
       </mt-tab-item> -->
       <router-link to="/profile">
         <div class="tab"  @click="checkUser" v-bind:class="{action:selectUser}">
-          <img v-show="!selectUser" src="../assets/User@2x.png" class="log" style="width: 1.2rem;">
-          <img v-show="selectUser" src="../assets/User.png" class="log" style="width: 1.2rem;">
-          {{tabs[2]}}
+          <img v-show="!selectUser" src="../assets/wode@2x.png" class="log"  style="display: inline-block">
+          <img v-show="selectUser" src="../assets/wode-xuanzhong@2x.png" class="log" style="display: inline-block">
+           <div class="str">{{tabs[2]}}</div>
         </div>
       </router-link>
     </div>
@@ -30,10 +32,9 @@
       return {
         selectCar: true,
         selectUser:false,
-        tabs: ['教练秀场', '排行榜', '我的']     // 排行榜不启用
+        tabs: ['秀场', '排行榜', '我的']     // 排行榜不启用
       }
     },
-
     mounted() {
 
     },
@@ -54,14 +55,16 @@
     color:rgb(103, 178, 251) !important;
   }
   .tab{
+    position: relative;
     font-size: 0.6rem;
     display: inline-block;
     width:7.4rem;
-    color:#666
+    color:#666;
+    padding: 0.2rem 0;
   }
   .log{
-    width: 1.6rem;
-    margin: 0 auto;
+    width: 0.8rem;
+    margin-left: 2.7rem;
   }
   .bottom{
     padding-top: 0.3rem;
@@ -77,6 +80,11 @@
     background-position: top left;
     background-color: #fafafa;
     display:-webkit-box; /* Safari and Chrome */
-    text-align: center;
+  }
+  .str{
+    display: inline-block;
+    position: absolute;
+    top:0.1rem;
+    margin-left: 0.2rem;
   }
 </style>

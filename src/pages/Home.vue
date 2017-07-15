@@ -21,12 +21,16 @@
                   <div class="item" >
                     <img :src="item.logoUrl" style="width:6.4rem; height:6.4rem;">
                   </div>
+                </router-link>
                   <p style="color:#666;background: #fff;padding:0.4rem;height:0.78rem; ">
                     <span style="float:left;margin-right:0.2rem;font-size:0.44rem">{{item.name}}</span>
                     <span style="float:left;font-size:0.46rem;color:#7ac9f7">{{item.score}}分</span>
-                    <!--<span style="float:right;font-size:0.44rem;color:#999">{{item.thumbsCount}}</span>-->
+                    <span style="float:right;font-size:0.44rem;color:#999">{{item.thumbsCount}}</span>
+                    <img v-show="!item.goodShow" @click="changeGoodShow(item)" src="../assets/goodDisable.png"style="width: 0.54rem;margin-right: 0.1rem;float:right"/>
+                    <img v-show="item.goodShow" @click="changeGoodShow(item)" src="../assets/goodAction.png"style="width: 0.54rem;margin-right: 0.1rem;float:right"/>
+
                   </p>
-                  </router-link>
+
               </div>
             </div>
           </div>
@@ -58,7 +62,7 @@
         tagShow:true,
         allLoaded: false,
       //  bottomText: '加载更多...',
-        loadPage:1,
+        loadPage:0,
         tag:[],
         tagSelect:[],
         Authorization:"",
@@ -85,12 +89,25 @@
     mounted() {
       this.setTitle();
       this.getTag();
-      this.getCoach();
+      this.loadBottom();
 
     },
     methods: {
       setTitle(){
         document.title = "教练秀场";
+      },
+      async changeGoodShow(item){
+      item.goodShow = !item.goodShow
+        var thumbsCount
+        if(item.goodShow){
+          item.thumbsCount = item.thumbsCount+1;
+          thumbsCount=1
+        }
+        else{
+          item.thumbsCount = item.thumbsCount-1;
+          thumbsCount=-1
+        }
+        var r = await http.post("userInfo/addThumbs",{id:item.id,thumbsCount:thumbsCount})
       },
       changTagShow(){
         this.tagShow =! this.tagShow
@@ -113,16 +130,17 @@
     }
     this.tag.push(...r.data)
   },
-  async getCoach() {
-    var r = await http.post("userInfo/coachWithTag" ,{pageIndex:1,pageSize:10});
-    this.coachDataList.push(...r.data.list)
-    console.log( this.coachDataList);
-  },
+
   async loadBottom() {
     this.loadPage = this.loadPage+1
     var r = await http.post("userInfo/coachWithTag" ,{pageIndex:this.loadPage ,pageSize:10});
-    if(r.result)
+    if(r.result && r.data.list && r.data.list.length){
+      for(var i=0;i<r.data.list.length ;i++){
+        r.data.list[i].goodShow = false;
+      }
       this.coachDataList.push(...r.data.list);
+    }
+
   }
   }
 

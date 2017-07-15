@@ -40,7 +40,7 @@
 
         <!--辅助信息-->
         <ul class="modlist hasarrow">
-          <router-link to=""><li><i class="icon about"></i>关于我们</li></router-link>
+          <router-link to="/about"><li><i class="icon about"></i>关于我们</li></router-link>
           <!--<router-link to=""><li><i class="icon advice"></i>意见反馈</li></router-link>-->
         </ul>
 

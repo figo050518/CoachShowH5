@@ -1,12 +1,12 @@
 <template>
   <div class="page-field">
-     <div class="header" @click.self="back">
-       班型信息
-    </div>  
+     <!--<div class="header" @click.self="back">-->
+       <!--班型信息-->
+    <!--</div>-->
     <div class="class-form">
        <div>
          <label>课程名称<i>*</i></label>
-         <input type="text" :placeholder="className==''?'例如普通班，周末班，VIP班':''" v-model="className">  
+         <input type="text" :placeholder="className==''?'例如普通班，周末班，VIP班':''" v-model="className">
        </div>
        <div>
            <label>驾照类型<i>*</i></label>
@@ -67,7 +67,7 @@ export default {
   data(){
     return {
     //    isNew:false,
-      isEdit:false, 
+      isEdit:false,
       className:'',
       licenseType:['c1','c2'],
       licenseIndex:0,
@@ -89,6 +89,7 @@ export default {
   components: {
   },
   mounted(){
+        this.setTitle();
         //   console.log(this.$route.params);
         if(common.isNotEmptyObj(this.$route.params)){
           // todo 编辑
@@ -115,6 +116,7 @@ export default {
       let res = await $http.post(url,params);
       cb(res);
     },
+    setTitle(){ document.title="班级信息"},
     back(){
         console.log('back');
         this.$router.go(-1);

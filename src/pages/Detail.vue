@@ -4,9 +4,14 @@
     <!--教练主页-->
     <!--</div>-->
     <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
-    <div class="loading" v-if="loading" style="margin: auto; width:50%; text-align:center;">
-      <mt-spinner type="snake" style="display:inline-block;"></mt-spinner>
-      加载中.....
+    <div class="loading" v-if="loading" style="width:15rem;text-align:center;position: relative">
+      <img src="../assets/WechatIMG76.jpg" style="width:15rem;">
+     <div style="font-size: 0.7rem;
+    position: absolute;
+    color: #999;
+    top: 16rem;
+    text-align: center;
+    width: 100%;">加载中.....</div>
     </div>
 
     <!-- 基本信息 -->
@@ -28,6 +33,7 @@
         <div class="coachAddress" style="font-size:0.48rem"><img src="../assets/Location.png" class="cron-img"
                                                                  name="map"/>{{coachData.area}}
         </div>
+        <div  @click="cshowEnv(coachData.imageUrl)" class="coachAddress" style="font-size:0.48rem"><img src="../assets/shan.png" style="width: 0.7rem" class="cron-img">查看教练海报</div>
       </div>
     </div>
     <!-- 学员印象 -->
@@ -43,7 +49,7 @@
         <div style="display: inline-block;
     color: rgb(12, 173, 255);
     font-size: 0.4rem;
-    float: right;" @click="chide" v-show="texthide">更多>>
+    float: right;" @click="chide" v-show="texthide" v-if="desMore">更多>>
         </div>
         <div style="display: inline-block;
     color: rgb(12, 173, 255);
@@ -63,9 +69,9 @@
                 color: #212121;margin-right: 0.4rem
                ">{{c.name}}</span>
             <span style="font-size:0.48rem;color:#0cadff;">{{c.price}}</span>
-            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">{{c.license}},{{c.cardLoadPerson}}人一车{{c.traffic}}</div>
+            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">{{c.license}},{{c.cardLoadPerson}}人一车,{{c.traffic}}</div>
           </div>
-          <div class="but"><a href="tel:4006787909" style="color: #fff;">咨询</a></div>
+          <div class="but"><a href="tel:13122046973" style="color: #fff;">咨询</a></div>
         </div>
       </div>
     </div>
@@ -78,9 +84,9 @@
                 color: #212121;margin-right: 0.4rem
                ">普通班</span>
             <span style="font-size:0.48rem;color:#0cadff;">5500元</span>
-            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,两人一车教练接送</div>
+            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,两人一车,教练接送</div>
           </div>
-          <div class="but"><a href="tel:4006787909" style="color: #fff;">咨询</a></div>
+          <div class="but"><a href="tel:13122046973" style="color: #fff;">咨询</a></div>
         </div>
         <div style="border-bottom: 1px solid #e0e2eb;">
           <div style="margin:  0.4rem 6rem 0.4rem 0.4rem ;display: inline-block">
@@ -88,9 +94,9 @@
                 color: #212121;margin-right: 0.4rem
                ">VIP班</span>
             <span style="font-size:0.48rem;color:#0cadff;">6800元</span>
-            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,一人一车教练接送</div>
+            <div style="font-size:0.48rem;color:#797979;margin-top: 0.4rem ">c1,一人一车,教练接送</div>
           </div>
-          <div class="but"><a href="tel:4006787909" style="color: #fff;">咨询</a></div>
+          <div class="but"><a href="tel:13122046973" style="color: #fff;">咨询</a></div>
         </div>
       </div>
     </div>
@@ -99,7 +105,7 @@
         <div style="display: inline-block;
     color: rgb(12, 173, 255);
     font-size: 0.4rem;
-    float: right;" @click="ehide" v-show="evnhide">更多>>
+    float: right;" @click="ehide" v-show="evnhide" v-if="envMore">更多>>
         </div>
         <div style="display: inline-block;
     color: rgb(12, 173, 255);
@@ -146,6 +152,8 @@
 
     data () {
       return {
+        envMore:false,
+        desMore:false,
         img:"",
         show:false,
         texthide: true,
@@ -183,6 +191,7 @@
         this.img = 'http://ose1l6bts.bkt.clouddn.com/%E8%AE%AD%E7%BB%83%E5%9C%BA2.jpg'
       },
       cshowEnv :function(img){
+        console.log(img)
         this.show = true
         this.img = img;
       }
@@ -220,6 +229,11 @@
         var r = await http.post("userInfo/coachIndex", {id: this.memberId});
         document.title = r.data.name + "教练的个人主页";
         console.log(r);
+        if(r.data.description.length > 84)
+          this.desMore = true;
+        if(r.data.envList.length>3){
+          this.envMore = true;
+        }
         if (r.data.score < 0) {
           this.star = [2, 2, 2, 2, 2]
         } else if (r.data.score > 5) {
@@ -341,7 +355,7 @@
   }
 
   .coachBaseInfo {
-    background: url("../assets/bgDetail.png");
+    background: url("../assets/bgDetail.985091b.jpg");
     background-size: 100% 100%;
     padding: 1rem 0.8rem;
     border-bottom: 2px solid #F2F2F2;
@@ -471,7 +485,6 @@
 
   .coachDescription .coachDesContent {
     padding: 10px 10px 0 10px;
-    font-size: 12px;
     color: #666;
   }
 

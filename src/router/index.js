@@ -14,6 +14,10 @@ import Photo from '@/pages/Photo'
 import regist from "@/pages/regist"
 import Profile from "@/components/Profile"
 import index from "@/pages/index"
+import About from "@/pages/about"
+import showMobile from '@/pages/showMobile'
+import changeMobile from '@/pages/changeMobile'
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,7 +29,7 @@ export default new Router({
       children:[
         {path: '', name: 'Home', component: Home},
         {path:'/profile',name:"Profile",component:Profile},
-        {path: '/regist', name: 'regist', component: regist},
+        {path: '/regist', name: 'regist', component: regist}
       ]},
     {path: '/new', name: 'New', component: New },
     {path: '/detail', name: 'Detail', component: Detail },
@@ -34,6 +38,9 @@ export default new Router({
     {path:'/myClass',name:'MyClass',component:MyClass},
     {path:'/editClass/:id',name:'EditClass',component:EditClass},
     {path:'/addClass',name:'AddClass',component:EditClass},
-    {path: '/photo',name: 'Photo',component: Photo}
+    {path: '/photo',name: 'Photo',component: Photo},
+    {path: '/about',name: 'About',component: About},
+    {path: '/showMobile/:phone',name:'showMobile',component:showMobile},
+    {path: '/changeMobile/:phone',name:'changeMobile',component:changeMobile}
   ]
 })

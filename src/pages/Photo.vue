@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <loading-bar
+      :on-error-done="errorDone"
+      :on-progress-done="progressDone"
+      :progress="progress"
+      :direction="direction"
+      :error="error" >
+    </loading-bar>
     <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
     <section class="grid">
       <ul class="photo_list">
@@ -10,12 +17,12 @@
         </li>
 
         <li v-for="(img, index) in fromServer" style="position: relative">
-          <div class="deletImage" @click="deleteImage(img.id)"></div>
+          <div class="deletImage" @click="openDel(img.id,index)"></div>
           <img :src="img.imageUrl" @click="cshow(img.imageUrl)"/>
         </li>
 
         <li v-for="(img, index) in thumbImg" style="position: relative">
-          <div class="deletImage" @click="deleteImage(img.id)"></div>
+          <div class="deletImage" @click="openDel(img.id)"></div>
           <img :src="img.imageUrl"/>
         </li>
       </ul>
@@ -24,6 +31,23 @@
     <section class="big" v-bind:class="{none: !bigFlag}" @click="hideBig">
       <img :style="{background: `url(${thumbImg[bigImgIndex]}) no-repeat center`}"/>
     </section>
+    <mt-popup
+      v-model="deleteVisible"
+      style="width: 60%;
+  border-radius: 8px;
+  padding: 10px;"
+      :closeOnClickModal="false">
+      <div class="page-field">
+        <div class="page-part" style="text-align: center;
+    margin: 0.5rem;">
+          是否确认删除?
+        </div>
+      </div>
+      <div class="page-field" >
+        <mt-button size="small" style="float: right" ref='bindPhoneBtn' @click.native="deleteVisible=false" >取消</mt-button>
+        <mt-button size="small" style="float: right;margin-right: 0.3rem" ref='bindPhoneBtn' @click="deleteImage" >确定</mt-button>
+      </div>
+    </mt-popup>
   </div>
 
 </template>
@@ -140,16 +164,20 @@
   .none {
     display: none;
   }
+
 </style>
 
 <script type="text/ecmascript-6">
   import $http from '../utils/api'
   import { Toast } from 'mint-ui';
   import showImage from '../components/showImage'
+  import loadingBar from "vue2-loading-bar" //引入插件
+
   export default {
     name: 'Photo',
     components:{
-      showImage
+      showImage,
+      loadingBar
     },
     data () {
       return {
@@ -162,12 +190,29 @@
         allImg: [],
         bigFlag: false,
         bigImgIndex: '',
+        deleteVisible:false,
+        id:0,
+        index:0,
+        error:false,
+        direction: 'right',
+        progress:0
       }
     },
     methods: {
       async post(url, params, cb){
         let res = await $http.post(url, params, {});
         cb(res);
+      },
+      errorDone(){
+        this.error = false
+      },
+      progressDone() {
+        this.progress = 0
+      },
+      openDel(id,index){
+        this.id = id;
+        this.index = index
+        this.deleteVisible = true
       },
       changShow:function(){
         this.show = !this.show;
@@ -179,9 +224,10 @@
       hideBig: function () {
         this.bigFlag = false;
       },
-      deleteImage :async function(id){
-        var r = await $http.post('uc/delPhoto',{id:id})
-        location.reload();
+      deleteImage :async function(){
+        this.deleteVisible = false
+        this.fromServer.splice(this.index,1);
+        var r = await $http.post('uc/delPhoto',{id:this.id})
       },
       showBig: function (index) {
         this.bigFlag = true;
@@ -216,12 +262,16 @@
         return blob;
       },
       onFileChange: async function (e) {
+        this.progress = 60;
         var files = e.target.files || e.dataTransfer.files;
         var formdata = new FormData();
         formdata.append('file', files[0]);
         var r = await $http.upload('uc/addPhoto', formdata);
         console.log(r)
-        r.data.imageUrl = r.data.url
+        r.data.imageUrl = r.data.url;
+        if(r.result){
+          this.progress = 100;
+        }
         //location.reload();
         //this.createImage(r.data);
 //          console.log(files);

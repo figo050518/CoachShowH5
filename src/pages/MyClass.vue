@@ -1,10 +1,6 @@
 <template>
-  <div class="page-field">
-     <div class="header" @click.self="back">
-       班型信息
-       <div class="add" @click.stop="edit(null)">添加</div>
-    </div>
-    <ul class="class-list">
+  <div class="field">
+    <ul class="class-list" style="margin-bottom: 1.7rem">
         <li v-for="(item,index) in myClass" :key='item.id'>
             <div class="fl">
                 <p class="class-name">{{item.name}}</p>
@@ -17,13 +13,33 @@
             <div class="fr">
                 <span class="price">¥{{item.price}}</span>
                 <span class="edit" @click="edit(item.id)"></span>
-                <span class="del" @click="del(item.id,index)"></span>
+              <span class="del" @click="openDel(item.id,index)"></span>
+                <!--<span class="del" @click="del(item.id,index)"></span>-->
             </div>
         </li>
     </ul>
-  </div>
-</template>
+    <div class="bottom" @click.stop="edit(null)">添加班级</div>
 
+    <mt-popup
+      v-model="deleteVisible"
+      style="width: 60%;
+  border-radius: 8px;
+  padding: 10px;"
+      :closeOnClickModal="false">
+      <div class="page-field">
+        <div class="page-part" style="text-align: center;
+    margin: 0.5rem;">
+          是否确认删除?
+        </div>
+      </div>
+      <div class="page-field" >
+        <mt-button size="small" style="float: right" ref='bindPhoneBtn' @click.native="deleteVisible=false" >取消</mt-button>
+        <mt-button size="small" style="float: right;margin-right: 0.3rem" ref='bindPhoneBtn' @click="del" >确定</mt-button>
+      </div>
+    </mt-popup>
+  </div>
+
+</template>
 <script>
 import common from '../utils/common.js'
 import $http from '../utils/api.js'
@@ -33,11 +49,15 @@ export default {
   data(){
     return {
       myClass:[],
+      deleteVisible:false,
+      id:0,
+      index:0
     };
   },
   components: {
   },
   mounted(){
+    this.setTitle();
     this.post('uc/myClass',{},res=>{
         console.log(res);
         if(res.result){
@@ -49,6 +69,14 @@ export default {
     async post(url,params,cb){
       let res = await $http.post(url,params);
       cb(res);
+    },
+    openDel(id,index){
+      this.id = id;
+      this.index = index
+      this.deleteVisible = true
+    },
+    setTitle(){
+      document.title="班型信息";
     },
     back(){
         console.log('back');
@@ -66,9 +94,10 @@ export default {
            })
         }
     },
-    del(id,index){
-       this.myClass.splice(index,1);
-       this.post('uc/delClass',{id:id},res=>{
+    del(){
+        this.deleteVisible = false
+       this.myClass.splice(this.index,1);
+       this.post('uc/delClass',{id:this.id},res=>{
           if(res.result){
               common.alert('删除成功',1000);
           }
@@ -79,15 +108,15 @@ export default {
 </script>
 
 <style scoped>
+  .field{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#f7f8fd;
+  }
 
-.page-field{
-  position: absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:#f7f8fd;
-}
 .banner {
   width: 100%;
   max-height: 200px;
@@ -178,4 +207,21 @@ export default {
         font-size: 10px;
     }
 }
+  .bottom{
+    position: fixed;
+    bottom: 0px;
+    text-align: center;
+    height: 1.4rem;
+    padding-top: 0.3rem;
+    color: rgb(255, 255, 255);
+    font-size: 0.7rem;
+    background: rgb(86, 146, 253);
+    width: 100%;
+  }
+.telephonePopup {
+  width: 60%;
+  border-radius: 8px;
+  padding: 10px;
+}
+
 </style>

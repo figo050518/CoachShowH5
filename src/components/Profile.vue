@@ -1,7 +1,7 @@
 <template>
     <div id="views">
       <div class="wrap">
-
+        <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
         <!--用户信息-->
         <div class="hd">
           <div class="avaterbox">
@@ -27,7 +27,7 @@
           </router-link>
           <li @click="goVip" v-show="loginFlag"><i class="icon vip"></i>我的会员</li>
           <router-link v-show="!loginFlag" to="/regist"><li><i class="icon post" ></i>我的秀卡</li></router-link>
-          <router-link v-show="loginFlag" to=""><li><i class="icon post" ></i>我的秀卡</li></router-link>
+          <li v-show="loginFlag" ><i class="icon post" @click="showMyCard"></i>我的秀卡</li>
         </ul>
 
         <!-- 招生信息 -->
@@ -52,6 +52,7 @@
 
 <script>
 import $http from '../utils/api.js'
+import common from '../utils/common.js'
 
 export default {
   name: 'Profile',
@@ -59,7 +60,9 @@ export default {
     return {
       userInfo: {},
       loginFlag:false,
-      textFlag:false
+      textFlag:false,
+      show:false,
+      img:''
     }
   },
 
@@ -76,6 +79,7 @@ export default {
         this.$set(this.userInfo,'logoUrl',res.data.logoUrl||this.$store.getters.getUserInfo.headimgurl);
         this.$set(this.userInfo,'nickname',res.data.name);
         this.$set(this.userInfo,'isMember',res.data.isMember);
+        this.$set(this.userInfo,'imageUrl',res.data.imageUrl);
       };
       if(this.userInfo.logoUrl == this.$store.getters.getUserInfo.headimgurl){
         this.textFlag=true
@@ -83,6 +87,18 @@ export default {
     })
   },
   methods:{
+    showMyCard(){
+      if(this.userInfo.imageUrl){
+        this.img= this.userInfo.imageUrl
+        this.show = true
+      }else{
+        common.alert('您暂无秀卡',1000);
+      }
+
+    },
+    changShow(){
+      this.show =!this.show
+    },
     setTitle(){
       document.title = "教练秀场";
     },

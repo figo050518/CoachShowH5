@@ -44,20 +44,22 @@
           this.sendFlag = true;
           let count =  setInterval(()=>{
               if(this.timeCount==0){
-            clearInterval(count);
-            this.sendFlag=false;
-            // this.timeCount = 30;
-          }else{
-            this.timeCount = this.timeCount - 1;
-          }
-        },1000);
+                clearInterval(count);
+                this.sendFlag=false;
+                // this.timeCount = 30;
+                }else{
+                  this.timeCount = this.timeCount - 1;
+                }
+           },1000);
           this.post('userInfo/sendMsg',{mobile:this.phone},(res)=>{
             if(res.result){
             common.alert('验证码发送成功，请查看短信确认',1000);
           };
         });
 
-        };
+        }else{
+          common.alert("请输入手机号",1000)
+        }
       },
       submit(){
         let err = this.checkForm();
@@ -193,7 +195,7 @@
     width: 8.2rem;
   }
   .form-wrap div.phone input{
-    width: 55%;
+    width: 8rem;
   }
   .form-wrap .msg-btn{
     position: absolute;
@@ -214,7 +216,7 @@
     right: 0.7rem;
     top: 1.27rem;
     margin-top: -15px;
-    line-height: 30px;
+    line-height: 1.5rem;
     color: #fff;
     border-radius:2px;
     width:24%;

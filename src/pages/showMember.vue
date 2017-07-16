@@ -40,7 +40,7 @@
     <div class="mask" v-show="showMask">
       <div>
         <p>暂不支持线上支付</p>
-        <p>开通会员请联系：18651359635</p>
+        <p>开通会员请联系：15601680626</p>
         <span @click="showMask=false">取消</span>
         <a href="tel:18651359635"><span>拨打</span></a>
       </div>

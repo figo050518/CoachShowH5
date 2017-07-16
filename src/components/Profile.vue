@@ -27,7 +27,7 @@
           </router-link>
           <li @click="goVip" v-show="loginFlag"><i class="icon vip"></i>我的会员</li>
           <router-link v-show="!loginFlag" to="/regist"><li><i class="icon post" ></i>我的秀卡</li></router-link>
-          <li v-show="loginFlag" ><i class="icon post" @click="showMyCard"></i>我的秀卡</li>
+          <li v-show="loginFlag" @click="showMyCard" ><i class="icon post" ></i>我的秀卡</li>
         </ul>
 
         <!-- 招生信息 -->

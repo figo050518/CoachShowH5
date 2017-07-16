@@ -19,7 +19,8 @@
       <div class="coachPoster"><img style="width: 6rem" :src="coachData.logoUrl"></div>
       <div class="coachInfo">
         <div class="coachName">{{coachData.name}} <img class="cron-img" style="margin-left: 0.2rem;"
-                                                       src="../assets/gold.png"/><span class="coachIsMember">{{coachData.memberName}}</span>
+                                                       src="../assets/gold.png"/><span v-if="coachData.memberName" class="coachIsMember">{{coachData.memberName}}</span>
+          <span v-if="!coachData.memberName" class="coachIsMember">会员认证</span>
         </div>
         <div class="coachYear" style="font-size:0.48rem">{{coachData.workYear}}年教龄
           <div v-for="s in star" style="display: inline-block;">

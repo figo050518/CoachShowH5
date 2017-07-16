@@ -40,6 +40,9 @@
       if (this.$route.path == '/profile') {
         this.selectCar = false
         this.selectUser = true
+      }else{
+        this.selectCar= true
+        this.selectUser=false
       }
     },
     methods: {

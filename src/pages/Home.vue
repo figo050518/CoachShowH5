@@ -8,7 +8,9 @@
             <div style=";background: #fff;padding:0.6rem  0.9rem 0.44rem 0.6rem;margin-bottom:0.2rem;position: relative"
                  v-bind:class="{hidden:tagShow}">
             <div class="tag-name" v-for='t in tag'
-                  v-on:click="selectTag(t)" v-bind:class="{action:t.select}">{{t.name}}
+                  v-on:click="selectTag(t)">{{t.name}}
+              <div v-show="t.select" class="selectOnline"></div>
+              <div v-show="!t.select" class="defOnline"></div>
             </div>
               <div class="pulldiv">
               <img v-show="tagShow" src="../assets/pull.png" class="pull-img" v-on:click="changTagShow()"/>
@@ -180,6 +182,13 @@
     border-bottom:0.08rem solid #7ac9f7;
     margin: 0 auto;
   }
+  .defOnline{
+    width: 0.8rem;
+    height: 0.04rem;
+    background-size: 100% 100%;
+    border-bottom:0.08rem solid #fff;
+    margin: 0 auto;
+  }
   .push-img{
     width: 0.6rem;
     position: absolute !important;
@@ -224,8 +233,7 @@
     height: 100%;
   }
   .action{
-    color: #7ac9f7;
-    border-color:#7ac9f7 !important;
+    border-bottom: 1px solid #7ac9f7;
   }
   .tag-name{
     font-size: 0.5rem;
@@ -233,8 +241,8 @@
     display: inline-block;
     height: 0.8rem;
     width: 2.9rem;
-    border: 1px solid #999;
-    border-radius: 0.2rem;
+    /*border: 1px solid #999;*/
+    /*border-radius: 0.2rem;*/
     text-align: center;
     padding-top: 0.1rem;
   }

@@ -34,8 +34,8 @@
         <ul class="modlist hasarrow">
           <router-link v-show="!loginFlag" to="/regist"><li><i class="icon class"></i>我的班型</li></router-link>
           <router-link v-show="loginFlag" to="/myClass"><li><i class="icon class"></i>我的班型</li></router-link>
-          <router-link v-show="!loginFlag" to="/regist"><li><i class="icon photo"></i>我的相册</li></router-link>
-          <router-link v-show="loginFlag" to="/photo"><li><i class="icon photo"></i>我的相册</li></router-link>
+          <router-link v-show="!loginFlag" to="/regist"><li style="border-bottom: 0"><i class="icon photo"></i>我的相册</li></router-link>
+          <router-link v-show="loginFlag" to="/photo"><li style="border-bottom: 0"><i class="icon photo"></i>我的相册</li></router-link>
         </ul>
 
         <!--辅助信息-->

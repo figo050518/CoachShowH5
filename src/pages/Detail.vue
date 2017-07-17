@@ -4,14 +4,18 @@
     <!--教练主页-->
     <!--</div>-->
     <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
-    <div class="loading" v-if="loading" style="width:15rem;text-align:center;position: relative">
-      <img src="../assets/WechatIMG76.jpg" style="width:15rem;">
-     <div style="font-size: 0.7rem;
+    <div class="loading" v-if="loading" style=" position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#f7f8fd;">
+      <img src="../assets/loading.png" style="    width: 4rem;
     position: absolute;
-    color: #999;
-    top: 16rem;
-    text-align: center;
-    width: 100%;">加载中.....</div>
+    top: 50%;
+    margin-top: -2rem;
+    left: 50%;
+    margin-left: -2rem;">
     </div>
 
     <!-- 基本信息 -->
@@ -29,12 +33,26 @@
             <div v-show='s == 3' class="starDisable"></div>
           </div>
         </div>
-        <div class="coachDriverSchool" style="font-size:0.48rem"><img src="../assets/school.png" class="cron-img"/>{{coachData.schoolName}}
+        <div class="coachDriverSchool" style="font-size:0.48rem;"><img src="../assets/school.png" class="cron-img"/>{{coachData.schoolName}}
         </div>
-        <div class="coachAddress" style="font-size:0.48rem"><img src="../assets/Location.png" class="cron-img"
+        <div class="coachAddress" style="font-size:0.48rem;"><img src="../assets/Location.png" class="cron-img"
                                                                  name="map"/>{{coachData.area}}
         </div>
-        <div  @click="cshowEnv(coachData.imageUrl)" class="coachAddress" style="font-size:0.48rem"><img src="../assets/shan.png" style="width: 0.7rem" class="cron-img">查看教练海报</div>
+        <div  @click="cshowEnv(coachData.imageUrl)" class="coachAddress" style="
+             border: 1px solid;
+    font-size: 0.48rem;
+    border-radius: 0.2rem;
+    margin-top: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding-top: 0.07rem;
+    padding-left: 0.15rem;
+
+        "><img src="../assets/shan.png" style=" width: 0.63rem;
+    margin-right: 0.1rem;
+    margin-left: 0.05rem;
+    vertical-align: text-top;
+    margin-top: 0.04rem;
+" class="cron-img">查看招生海报</div>
       </div>
     </div>
     <!-- 学员印象 -->
@@ -258,7 +276,7 @@
         setTimeout(() => {
           if (r.result)
             this.coachData = r.data;
-          this.loading = false;
+         this.loading = false;
         }, 1000);
       }
 

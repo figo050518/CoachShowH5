@@ -156,28 +156,28 @@
     background-size: 60%;
   }
   .info div{
-    padding-left: 3.5rem;
+    padding-left: 2.8rem;
     margin: 1rem;
   }
   .info div:nth-of-type(1){
     background: url('../assets/rgm/TU1@2x.png') no-repeat;
     background-size: 30px;
-    background-position: 20% 50%;
+    background-position: 14% 50%;
   }
   .info div:nth-of-type(2){
     background: url('../assets/rgm/tu2@2x.png') no-repeat;
     background-size: 30px;
-    background-position: 20% 50%;
+    background-position: 14% 50%;
   }
   .info div:nth-of-type(3){
     background: url('../assets/rgm/tu3@2x.png') no-repeat;
     background-size: 30px;
-    background-position: 20% 50%;
+    background-position: 14% 50%;
   }
   .info div:nth-of-type(4){
     background: url('../assets/rgm/tu4@2x.png') no-repeat;
     background-size: 30px;
-    background-position: 20% 50%;
+    background-position: 14% 50%;
   }
   .info div p:nth-of-type(1){
     color:#8d7b2d;

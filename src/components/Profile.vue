@@ -14,8 +14,8 @@
             <!-- <span class="regist">注册</span><span class="login">登录</span> -->
           </div>
           <div class="editInfo">
-            <span v-show="textFlag">请完善您的信息</span>
-            <router-link v-show="loginFlag" to="/editUser"><span>编辑</span></router-link>
+            <span v-show="loginFlag && textFlag" to="/editUser">请完善您的信息</span>
+            <router-link v-show="loginFlag && !textFlag" to="/editUser"><span>编辑</span></router-link>
             <router-link v-show="!loginFlag" to="/regist"><span>登录</span></router-link>
           </div>
         </div>
@@ -26,8 +26,8 @@
             <li><i class="icon vip"></i>我的会员</li>
           </router-link>
           <li @click="goVip" v-show="loginFlag"><i class="icon vip"></i>我的会员</li>
-          <router-link v-show="!loginFlag" to="/regist"><li><i class="icon post" ></i>我的秀卡</li></router-link>
-          <li v-show="loginFlag" @click="showMyCard" ><i class="icon post" ></i>我的秀卡</li>
+          <router-link v-show="!loginFlag" to="/regist"><li style="border-bottom: 0"><i class="icon post" ></i>我的秀卡</li></router-link>
+          <li v-show="loginFlag" @click="showMyCard" style="border-bottom: 0" ><i class="icon post" ></i>我的秀卡</li>
         </ul>
 
         <!-- 招生信息 -->

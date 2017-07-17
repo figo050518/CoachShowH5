@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div style="margin-top: 1.8rem;margin-bottom: 0.7rem;">
-      <img src="../assets/logo@2x.png" style="margin: 0 auto; width: 5rem;"/>
-      <div style="text-align: center;font-size: 0.8rem;color:#999;margin-top: 1rem">教练帮</div>
+    <div style="margin-top: 1.8rem;margin-bottom: 0.5rem;">
+      <img src="../assets/logo@2x.png" style="margin: 0 auto; width: 4rem;"/>
+      <div style="text-align: center;font-size: 0.65rem;color:#999;margin-top: 1rem">教练帮</div>
     </div>
     <div style=" margin-left: 1.1rem;
     margin-right: 1.1rem;">
@@ -31,7 +31,7 @@
       <span style="color: #c7c7dc;font-size: 0.6rem;float: left">我已阅读,并同意《用户注册协议》</span>
 
       <div style="margin-top: 2.5rem;font-size: 0.7rem;color: #ffffff;background: #38b1e0;text-align: center;    border-radius: 0.3rem;
-    padding: 0.3rem;" @click="submit">保存</div>
+    padding: 0.3rem;" @click="submit">登录</div>
     </div>
 
 

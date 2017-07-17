@@ -28,7 +28,7 @@
           ;width: 4.4rem;background: #f3f3f3;padding:0.6rem 0;text-align: center;font-size: 0.7rem;color:#808080">剩余{{timeCount}}</div>
       </div>
       <div style="margin-top: 1.7rem;font-size: 0.7rem;color: #ffffff;background: #38b1e0;text-align: center;    border-radius: 0.2rem;
-    padding: 0.3rem;" @click="submit">保存</div>
+    padding: 0.3rem;" @click="submit">更换手机号</div>
     </div>
 </template>
 

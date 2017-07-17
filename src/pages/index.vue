@@ -11,8 +11,11 @@
           <div class="str">{{tabs[0]}}</div>
         </div>
       </router-link>
-      <div style="height: 1rem;
-    border: 1px solid #c6cdcc;"></div>
+      <div style="    height: 0.8rem;
+    border-left: 1px solid rgb(198, 205, 204);
+    position: absolute;
+    right: 50%;
+    top: 0.45rem;"></div>
       <!--  <mt-tab-item id="1">
       <img slot="icon" src="../assets/100x100.png">{{tabs[1]}}
       </mt-tab-item> -->
@@ -95,7 +98,7 @@
   .str {
     display: inline-block;
     position: absolute;
-    top: 0.1rem;
+    top: 0.16rem;
     margin-left: 0.2rem;
   }
 </style>

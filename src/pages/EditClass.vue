@@ -17,7 +17,8 @@
        </div>
        <div>
            <label>课程费用<i>*</i></label>
-           <input type="text" :placeholder="price==''?'例如4500元':''" v-model="price" :value="price">
+           <input style="width: 63%;" type="text" :placeholder="price==''?'例如4500元':''" v-model="price" :value="price">
+            元
        </div>
        <div @click="showShuttle=true">
            <label>接送方式</label>
@@ -29,7 +30,8 @@
        </div>
        <div>
            <label>几人一车</label>
-           <input type="text" :placeholder="memberNum==''?'例如4人':''" v-model="memberNum" :value="memberNum">
+           <input style="width: 63%;" type="text" :placeholder="memberNum==''?'例如4人':''" v-model="memberNum" :value="memberNum">
+            人
        </div>
        <div>
            <label>班型描述</label>
@@ -37,7 +39,7 @@
        </div>
     </div>
     <div class="save" @click="save">
-        <span>保存</span>
+        <span>保&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp存</span>
     </div>
     <div class="mask" v-if="showClass">
         <ul>
@@ -69,7 +71,7 @@ export default {
     //    isNew:false,
       isEdit:false,
       className:'',
-      licenseType:['c1','c2'],
+      licenseType:['C1','C2'],
       licenseIndex:0,
       price:'',
       shuttleType:['教练接送','班车接送','自行前往'],
@@ -103,7 +105,7 @@ export default {
                  this.price = data.price;
                  this.shuttleIndex = this.shuttleType.indexOf(data.traffic);
                  this.classIndex = this.classTime.indexOf(data.learnTime);
-                 this.memberNum = data.cardLoadPerson+'人';
+                 this.memberNum = data.cardLoadPerson;
                  this.description = data.description;
              }else{
                  common.alert(res.msg);
@@ -221,11 +223,11 @@ export default {
    margin-top: -5px;
 }
 .class-form div{
-    line-height: 40px;
+    line-height: 1.6rem;
     border-bottom: 1px solid #ddd;
     padding:0 10px;
     background: #fff;
-    font-size:12px;
+    font-size: 0.6rem;
 }
 .class-form div label{
     width:30%;
@@ -243,6 +245,7 @@ export default {
    height: 25px;
    text-align:right;
    outline: none;
+  font-size: 0.6rem;
 }
 .class-form div input[type='radio']{
     display: inline-block;
@@ -258,6 +261,7 @@ export default {
    outline: none;
    vertical-align: text-top;
    margin-bottom: 10px;
+  font-size: 0.5rem;
 }
 .save{
     padding:10px;
@@ -267,10 +271,12 @@ export default {
 .save span{
     display: block;
     background:#38b1e0;
-    line-height: 28px;
+    line-height: 1.4rem;
     color: #fff;
     border-radius: 4px;
+    font-size: 0.7rem;
 }
+
 .arr{
     display: inline-block;
     position: relative;

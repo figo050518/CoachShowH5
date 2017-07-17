@@ -17,7 +17,9 @@
         </li>
 
         <li v-for="(img, index) in fromServer" style="position: relative">
-          <div class="deletImage" @click="openDel(img.id,index)"></div>
+          <div class="deletImage" @click="openDel(img.id,index)">
+            <img src="http://ose1l6bts.bkt.clouddn.com/%7B66B14AE0-0E08-C1AD-F034-E54CE3E94C42%7D.png"/>
+          </div>
           <img :src="img.imageUrl" @click="cshow(img.imageUrl)"/>
         </li>
 
@@ -55,12 +57,13 @@
 <style scoped>
   .deletImage {
     background-size: 100% 100%;
-    background-image: url(http://ose1l6bts.bkt.clouddn.com/%7B66B14AE0-0E08-C1AD-F034-E54CE3E94C42%7D.png);
+    background: rgba(255,255,255,0.6);
     width: 0.7rem;
     height: 0.8rem;
     position: absolute;
-    right: 0.2rem;
-    top: 0.1rem;
+    right: 0;
+    top: 0;
+    padding: 0.1rem;
   }
 
   .container {

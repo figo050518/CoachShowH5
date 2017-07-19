@@ -11,6 +11,8 @@ import common from './utils/common'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import LazyLoad from './utils/lazyLoader'
+import touch from 'vue-directive-touch';
+Vue.use(touch);
 Vue.use(LazyLoad);
 Vue.use(VueAxios, axios)
 

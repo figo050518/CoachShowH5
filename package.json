@@ -18,7 +18,8 @@
     "vue-axios": "^2.0.2",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1",
-    "vue2-loading-bar":"0.0.1"
+    "vue2-loading-bar":"0.0.1",
+    "vue-directive-touch":"1.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

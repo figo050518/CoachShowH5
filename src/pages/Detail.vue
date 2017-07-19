@@ -3,7 +3,7 @@
     <!--<div class="header" @click="back">-->
     <!--教练主页-->
     <!--</div>-->
-    <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
+    <showImage :show="show" :bag="bag" :img="img" v-on:changeShow="changShow"></showImage>
     <div class="loading" v-if="loading" style=" position: absolute;
     top:0;
     left:0;
@@ -171,6 +171,7 @@
 
     data () {
       return {
+        bag:true,
         envMore:false,
         desMore:false,
         img:"",

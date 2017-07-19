@@ -1,7 +1,7 @@
 <template>
     <div id="views">
       <div class="wrap">
-        <showImage :show="show" :img="img" v-on:changeShow="changShow"></showImage>
+        <showImage :show="show" :bag="bag" :img="img" v-on:changeShow="changShow"></showImage>
         <!--用户信息-->
         <div class="hd">
           <div class="avaterbox">
@@ -58,6 +58,7 @@ export default {
   name: 'Profile',
   data () {
     return {
+      bag:true,
       userInfo: {},
       loginFlag:false,
       textFlag:false,

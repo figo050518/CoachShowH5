@@ -1,7 +1,7 @@
 <template>
-  <div class="bac" v-show="show" @click="cshow">
-    <img :src="img" width="100%" ref="img"  style="position: absolute;top:50%"
-         :style="{ marginTop: top + 'px' }">
+  <div class="bac" v-show="show" v-touch:tap="cshow" v-touch:long="clong">
+    <img :src="img" width="100%" ref="img"  style="position: absolute;top:0"
+         :style="{ marginTop: height + 'px' ,top:top}">
   </div>
 </template>
 <script>
@@ -14,23 +14,39 @@
       img: {
         type: String,
         default: ''
+      },
+      bag: {
+        type: Boolean,
+        default: false
       }
     },
     data(){
       return {
-        top: ''
+        height: '',
+        top:''
       }
     },
     mounted(){
+      if(this.bag){
+        this.top = '50%';
+        this.height = -293
+      }
+      else{
       var _this=this;
       this.$refs.img.onload = function(){
-        _this.top = -(this.height / 2);
+        _this.height = -(this.height / 2);
+        _this.top = '50%'
 
+        }
       }
     },
     methods: {
       cshow:function(){
-        this.$emit('changeShow');
+        var _this = this;
+        _this.$emit('changeShow');
+      },
+      clong:function(){
+        console.log('clong-img')
       }
 
     }

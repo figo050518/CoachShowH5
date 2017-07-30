@@ -33,7 +33,7 @@
     },
     methods:{
       getConfig : async function(){
-        var r = await $http.post("insurance/wxConfig",{url:`http://192.168.0.101:3002/pageShow/${this.userId}`});
+        var r = await $http.post("insurance/wxConfig",{url:`http://123.206.232.11:9088/pageShow/${this.userId}`});
         var data = r.data;
         console.log(data);
         var name = JSON.parse(localStorage.getItem("name"));

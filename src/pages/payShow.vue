@@ -45,7 +45,7 @@
             title: `${name}教练推荐给你一个学车福利-不过包赔险`, // 分享标题
             link: `http://123.206.232.11:9088/#/pageShow/${this.userId}`, // 分享链接
             desc:"你补考，我报销补考费；你重学，我还报销学费。",
-            imgUrl: 'https://static.fs.bao.bigins.cn/logos/120@2x.png', // 分享图标
+            imgUrl: 'http://ose1l6bts.bkt.clouddn.com/c5b153c30884acf5.jpg', // 分享图标
             success: function () {
               // 用户确认分享后执行的回调函数
             },
@@ -57,7 +57,7 @@
             title: `${name}教练推荐给你一个学车福利-不过包赔险`, // 分享标题
             desc:"你补考，我报销补考费；你重学，我还报销学费。",
             link: `http://123.206.232.11:9088/#/pageShow/${this.userId}`, // 分享链接
-            imgUrl: 'https://static.fs.bao.bigins.cn/logos/120@2x.png', // 分享图标
+            imgUrl: 'http://ose1l6bts.bkt.clouddn.com/c5b153c30884acf5.jpg', // 分享图标
             success: function () {
               // 用户确认分享后执行的回调函数
             },

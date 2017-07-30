@@ -38,6 +38,12 @@
           <router-link v-show="loginFlag" to="/photo"><li style="border-bottom: 0"><i class="icon photo"></i>我的相册</li></router-link>
         </ul>
 
+        <ul class="modlist hasarrow">
+          <router-link v-show="!loginFlag" to="/regist"><li><i class="icon class"></i>去支付</li></router-link>
+          <router-link v-show="loginFlag" :to="{name:'PayShow' ,params:{userId:userId}}"><li><i class="icon class"></i>去支付</li></router-link>
+          <router-link v-show="!loginFlag" to="/regist"><li style="border-bottom: 0"><i class="icon photo"></i>我的收入</li></router-link>
+          <router-link v-show="loginFlag" to="/payList"><li style="border-bottom: 0"><i class="icon photo"></i>我的收入</li></router-link>
+        </ul>
         <!--辅助信息-->
         <ul class="modlist hasarrow">
           <router-link to="/about"><li><i class="icon about"></i>关于我们</li></router-link>
@@ -63,7 +69,8 @@ export default {
       loginFlag:false,
       textFlag:false,
       show:false,
-      img:''
+      img:'',
+      userId:""
     }
   },
   components: {
@@ -75,6 +82,7 @@ export default {
           this.loginFlag = true;
         }
     });
+    this.userId = JSON.parse(localStorage.getItem('id'))
     this.setTitle();
     this.post('uc/getUserInfo',{},res=>{
       console.log(res);

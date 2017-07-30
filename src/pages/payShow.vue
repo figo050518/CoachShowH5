@@ -8,10 +8,10 @@
         <div>¥180</div>
       </div>
       <router-link :to="{name:'PayGO',params:{userId:userId}}">
-        <div class="btn">
-        <div class="buy">立即购买</div>
+        <div class="btn-buy">
+          <div class="buy">立即购买</div>
           <div class="tips">95%的学员选择了驾考宝提供的保障</div>
-          </div>
+        </div>
       </router-link>
     </div>
   </div>
@@ -24,47 +24,60 @@
     name: "PayShow",
     data(){
       return{
-        userId:"",
+        userId:""
       }
     },
     mounted(){
       this.userId =this.$route.params.userId;
-      this.getConfig()
+      this.getConfig();
     },
     methods:{
       getConfig : async function(){
-        var r = await $http.post("insurance/wxConfig",{});
+        var r = await $http.post("insurance/wxConfig",{url:`http://192.168.0.101:3002/pageShow/${this.userId}`});
         var data = r.data;
-        console.log(r);
-        var name = JSON.parse(localStorage.getItem("name"))
-        data.dubug = false;
+        console.log(data);
+        var name = JSON.parse(localStorage.getItem("name"));
+        data.debug = true;
         data.jsApiList = ['onMenuShareTimeline','onMenuShareAppMessage'];
-        wx.config(data)
+        wx.config(data);
         wx.ready(function(){
           wx.onMenuShareTimeline({
             title: `${name}教练推荐给你一个学车福利-不过包赔险`, // 分享标题
-            link: `http://123.206.232.11:9088/#/pageShow/${this.userId}`, // 分享链接
+            link: `http://123.206.232.11:9088/pageShow/${this.userId}`, // 分享链接
             desc:"你补考，我报销补考费；你重学，我还报销学费。",
             imgUrl: 'http://ose1l6bts.bkt.clouddn.com/c5b153c30884acf5.jpg', // 分享图标
             success: function () {
               // 用户确认分享后执行的回调函数
+              common.alert("分享成功")
             },
             cancel: function () {
               // 用户取消分享后执行的回调函数
+              common.alert("取消分享")
+            },
+            fail:function(){
+              common.alert("分享失败")
             }
           });
           wx.onMenuShareAppMessage({
             title: `${name}教练推荐给你一个学车福利-不过包赔险`, // 分享标题
             desc:"你补考，我报销补考费；你重学，我还报销学费。",
-            link: `http://123.206.232.11:9088/#/pageShow/${this.userId}`, // 分享链接
+            link: `http://123.206.232.11:9088/pageShow/${this.userId}`, // 分享链接
             imgUrl: 'http://ose1l6bts.bkt.clouddn.com/c5b153c30884acf5.jpg', // 分享图标
             success: function () {
               // 用户确认分享后执行的回调函数
+              common.alert("分享成功")
             },
             cancel: function () {
               // 用户取消分享后执行的回调函数
+              common.alert("取消分享")
+            },
+            fail:function(){
+              common.alert("分享失败")
             }
           });
+        })
+        wx.error(function(res){
+          console.log(res);
         })
       }
     }
@@ -138,7 +151,7 @@
   .price div {
     font-size: 0.925rem;
   }
-  .fixedLayer .btn {
+  .fixedLayer .btn-buy {
     text-align: center;
     width: 8.7rem;
     height: 2.4rem;
@@ -149,10 +162,10 @@
     color: #fff;
     font-family: SFUIDisplay-Regular;
   }
-  .fixedLayer .btn .buy {
+  .fixedLayer .btn-buy .buy {
     font-size: 1rem;
   }
-  .fixedLayer .btn .tips {
+  .fixedLayer .btn-buy .tips {
     margin-top: 0.1rem;
     font-size: 0.5rem;
   }

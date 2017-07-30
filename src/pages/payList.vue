@@ -49,9 +49,8 @@
           "pageIndex":1,
           "pageSize":10
         });
-        if(r.result && r.data && r.data.page && r.data.page){
           this.data= r.data
-        }
+
       }
     }
 

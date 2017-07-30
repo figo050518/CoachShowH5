@@ -18,11 +18,15 @@ import About from "@/pages/about"
 import showMobile from '@/pages/showMobile'
 import changeMobile from '@/pages/changeMobile'
 import ShowMember from '@/pages/showMember'
+import payShow from '@/pages/payShow'
+import payGo from '@/pages/payGo'
+import payOver from '@/pages/payOver'
+import payList from '@/pages/payList'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
-
     // 公众号登录授权中转页
     {path: '/author', name: Author, component: Author},
     {path: '/', name: 'index', component: index,
@@ -42,6 +46,10 @@ export default new Router({
     {path: '/about',name: 'About',component: About},
     {path: '/showMobile/:phone',name:'showMobile',component:showMobile},
     {path: '/changeMobile/:phone',name:'changeMobile',component:changeMobile},
-    {path: '/showMember/:isMember/:imgUrl',name:'ShowMember',component:ShowMember}
+    {path: '/showMember/:isMember/:imgUrl',name:'ShowMember',component:ShowMember},
+    {path: '/payShow/:userId', name:"PayShow",component:payShow},
+    {path: '/payGo/:userId',name:'PayGO',component:payGo},
+    {path: '/payOver',name:'PayOver',component:payOver},
+    {path: '/payList',name:'PayList',component:payList}
   ]
 })

@@ -99,6 +99,8 @@
         var r =  await http.post('userInfo/login',{mobile:this.phone,code:this.msgCode});
         if(r.result){
           localStorage.setItem('id',JSON.stringify(r.data.id));
+          localStorage.setItem('name',JSON.stringify(r.data.name));
+          console.log(r.data.id);
           this.$router.push({
             path:'/profile'
           })
